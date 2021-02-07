@@ -21,6 +21,11 @@ class HTTPServer(TCPServer):
         501: 'Not Implemented'
     }
 
+    def __init__(self, host='127.0.0.1', port=8888, data_folder: str = 'data'):
+        super().__init__(host=host, port=port)
+
+        self.data_folder = data_folder
+
     def handle_request(self, data) -> bytes:
         """
         Handles request and performs data preprocessing
@@ -58,20 +63,13 @@ class HTTPServer(TCPServer):
 
     def handle_POST(self, request: HTTPRequest) -> bytes:
         """Handler for POST HTTP method"""
+
         response_line = self.response_line(status_code=200)
 
         blank_line = b'\r\n'
 
         data_repository = request.data_repository
-        print(f'Data: {data_repository.data}')
-        data_type = mimetypes.guess_extension(
-            type=data_repository.content_type
-        )
-
-        print(data_repository.filename)
-
-        with open(file=data_repository.filename, mode='wb') as file:
-            file.write(data_repository.data)
+        data_repository.save(folder=self.data_folder)
 
         response = b''.join([
             response_line, blank_line

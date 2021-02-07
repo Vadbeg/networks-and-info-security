@@ -1,5 +1,6 @@
 """Module with POST data parser"""
 
+import os
 from typing import Optional, List
 
 
@@ -24,6 +25,12 @@ class DataParser:
         self.content_type = self.__get_content_type(lines=lines)
 
         self.data = self.__get_data(lines=lines)
+
+    def save(self, folder: str):
+        data_path = os.path.join(folder, self.filename)
+
+        with open(file=data_path, mode='wb') as file:
+            file.write(self.data)
 
     @staticmethod
     def __get_filename(lines: List[bytes]) -> str:

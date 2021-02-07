@@ -81,13 +81,14 @@ class HTTPServer(TCPServer):
         """Handler for OPTIONS HTTP method"""
 
         filename = request.uri.strip('/')
+        filepath = os.path.join(self.data_folder, filename)
 
         response_line = self.response_line(200)
 
         extra_headers = {'Allow': 'OPTIONS, GET, POST'}
 
-        if os.path.exists(filename) and not os.path.isdir(filename):
-            content_type = mimetypes.guess_type(url=filename)[0] or 'text/html'
+        if os.path.exists(filepath) and not os.path.isdir(filepath):
+            content_type = mimetypes.guess_type(url=filepath)[0] or 'text/html'
             extra_headers.update(
                 {'Content-Type': content_type}
             )
@@ -105,18 +106,19 @@ class HTTPServer(TCPServer):
         """Handler for GET HTTP method"""
 
         filename = request.uri.strip('/')
+        filepath = os.path.join(self.data_folder, filename)
 
         blank_line = b'\r\n'
 
-        if os.path.exists(filename) and not os.path.isdir(filename):
+        if os.path.exists(filepath) and not os.path.isdir(filepath):
             response_line = self.response_line(status_code=200)
 
-            content_type = mimetypes.guess_type(url=filename)[0] or 'text/html'
+            content_type = mimetypes.guess_type(url=filepath)[0] or 'text/html'
             extra_headers = {'Content-Type': content_type}
 
             response_headers = self.response_headers(extra_headers=extra_headers)
 
-            with open(file=filename, mode='rb') as file:
+            with open(file=filepath, mode='rb') as file:
                 response_body = file.read()
         else:
             response_line = self.response_line(status_code=404)

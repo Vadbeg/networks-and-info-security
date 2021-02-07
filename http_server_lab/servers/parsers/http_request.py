@@ -1,8 +1,9 @@
 """Module with HTTP request string parser"""
 
-from typing import List, Tuple, Optional
+from typing import Dict, List, Tuple, Optional
 
 from http_server_lab.utils.errors import BadRequestError
+from http_server_lab.servers.parsers.data_parser import DataParser
 
 
 class HTTPRequest:
@@ -12,6 +13,8 @@ class HTTPRequest:
         self.uri: Optional[str] = None
 
         self.http_version: str = '1.1'
+
+        self.data_repository: Optional[DataParser] = None
 
         self.__parse(data)
 
@@ -57,4 +60,8 @@ class HTTPRequest:
 
         if request_http_version:
             self.http_version = request_http_version
+
+        if request_method == 'POST':
+            self.data_repository = DataParser(raw_data=data)
+
 

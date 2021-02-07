@@ -20,7 +20,7 @@ class TCPServer:
         while True:
             conn, addr = s.accept()
             print("Connected by", addr)
-            data = conn.recv(1024 * 10_000)
+            data = conn.recv(1024 * 100_000)
 
             response = self.handle_request(data)
 

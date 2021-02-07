@@ -60,20 +60,21 @@ class HTTPServer(TCPServer):
         """Handler for POST HTTP method"""
         response_line = self.response_line(status_code=200)
 
-        extra_headers = {
-            'Date': 'Mon, 27 Jul 2009 12:28: 53 GMT',
-            'Content - Length': '88',
-            'Connection': 'Closed'
-        }
-
-        response_headers = self.response_headers(
-            extra_headers=extra_headers
-        )
-
         blank_line = b'\r\n'
 
+        data_repository = request.data_repository
+        print(f'Data: {data_repository.data}')
+        data_type = mimetypes.guess_extension(
+            type=data_repository.content_type
+        )
+
+        print(data_repository.filename)
+
+        with open(file=data_repository.filename, mode='wb') as file:
+            file.write(data_repository.data)
+
         response = b''.join([
-            response_line, response_headers, blank_line
+            response_line, blank_line
         ])
 
         return response

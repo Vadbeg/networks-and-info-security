@@ -2,16 +2,14 @@ import requests
 
 
 if __name__ == '__main__':
-    url = "http://localhost:8888/data/"
-    file_path = '/home/vadbeg/Downloads/wall1.jpg'
+    url = "http://localhost:8888/data/hello.html"
 
-    with open(file=file_path, mode='rb') as file:
-        payload = file.read()
+    payload = {}
+    files = [
+        ('image', ('image.jpeg', open('data/grapefruit.jpg', 'rb'), 'image/jpeg'))
+    ]
+    headers = {}
 
-    headers = {
-        'Content-Type': 'image/jpeg'
-    }
-
-    response = requests.request("POST", url, headers=headers, data=payload)
+    response = requests.request("POST", url, headers=headers, data=payload, files=files)
 
     print(response)

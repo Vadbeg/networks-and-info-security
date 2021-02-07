@@ -21,7 +21,7 @@ class TCPServer:
             conn, addr = s.accept()
             print("Connected by", addr)
             data = conn.recv(1024 * 100_000)
-            conn.settimeout(0.5)
+            conn.settimeout(1.0)
 
             counter = 0
             while True:

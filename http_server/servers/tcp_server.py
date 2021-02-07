@@ -21,6 +21,23 @@ class TCPServer:
             conn, addr = s.accept()
             print("Connected by", addr)
             data = conn.recv(1024 * 100_000)
+            conn.settimeout(0.5)
+
+            counter = 0
+            while True:
+
+                try:
+                    new_data = conn.recv(1024)
+                    data += new_data
+                except socket.timeout as err:
+                    print(f'Socket timed out!')
+                    break
+
+                counter += 1
+
+                if new_data == b'':
+                    print(f'Received additional {counter * 20} bytes of data')
+                    break
 
             response = self.handle_request(data)
 
@@ -33,7 +50,7 @@ class TCPServer:
                 counter += 1
 
                 if new_data == b'':
-                    print(f'Received additional {counter * 20} bytes of data')
+                    print(f'Received garbage {counter * 20} bytes of data')
                     break
 
             conn.close()

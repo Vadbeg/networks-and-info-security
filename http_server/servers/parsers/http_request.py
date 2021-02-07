@@ -2,8 +2,8 @@
 
 from typing import Dict, List, Tuple, Optional
 
-from http_server_lab.utils.errors import BadRequestError
-from http_server_lab.servers.parsers.data_parser import DataParser
+from http_server.utils.errors import BadRequestError
+from http_server.servers.parsers.data_parser import DataParser
 
 
 class HTTPRequest:

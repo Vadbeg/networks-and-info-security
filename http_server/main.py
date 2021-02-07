@@ -5,7 +5,7 @@ sys.path.append('/home/vadbeg/Projects/University/networks-and-info-security')
 
 import argparse
 
-from http_server_lab.servers.http_server import HTTPServer
+from http_server.servers.http_server import HTTPServer
 
 
 def get_args():

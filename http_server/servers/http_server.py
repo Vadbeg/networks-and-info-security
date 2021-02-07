@@ -3,8 +3,8 @@ import os
 import mimetypes
 from typing import Dict, Optional
 
-from http_server_lab.servers.tcp_server import TCPServer
-from http_server_lab.servers.parsers.http_request import HTTPRequest
+from http_server.servers.tcp_server import TCPServer
+from http_server.servers.parsers.http_request import HTTPRequest
 
 
 class HTTPServer(TCPServer):

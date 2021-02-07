@@ -3,7 +3,7 @@
 Here are presented different projects connected to 
 networks or information security. Under each folder you can find separate `README.md` file.
 
-1. HTTP server using python `socket` library - [link](https://github.com/Vadbeg/networks-and-info-security/blob/master/http_server/README.md).
+1. HTTP server using python `socket` library - [link](https://github.com/Vadbeg/networks-and-info-security/tree/master/http_server).
 
 
 ## Built With

@@ -16,6 +16,7 @@ class HTTPServer(TCPServer):
 
     STATUS_CODES = {
         200: 'OK',
+        201: 'Created',
         404: 'No Found',
         501: 'Not Implemented'
     }
@@ -55,7 +56,54 @@ class HTTPServer(TCPServer):
 
         return response
 
+    def handle_POST(self, request: HTTPRequest) -> bytes:
+        """Handler for POST HTTP method"""
+        response_line = self.response_line(status_code=200)
+
+        extra_headers = {
+            'Date': 'Mon, 27 Jul 2009 12:28: 53 GMT',
+            'Content - Length': '88',
+            'Connection': 'Closed'
+        }
+
+        response_headers = self.response_headers(
+            extra_headers=extra_headers
+        )
+
+        blank_line = b'\r\n'
+
+        response = b''.join([
+            response_line, response_headers, blank_line
+        ])
+
+        return response
+
+    def handle_OPTIONS(self, request: HTTPRequest) -> bytes:
+        """Handler for OPTIONS HTTP method"""
+
+        filename = request.uri.strip('/')
+
+        response_line = self.response_line(200)
+
+        extra_headers = {'Allow': 'OPTIONS, GET, POST'}
+
+        if os.path.exists(filename) and not os.path.isdir(filename):
+            content_type = mimetypes.guess_type(url=filename)[0] or 'text/html'
+            extra_headers.update(
+                {'Content-Type': content_type}
+            )
+
+        response_headers = self.response_headers(extra_headers=extra_headers)
+        blank_line = b'\r\n'
+
+        response = b''.join([
+            response_line, response_headers, blank_line
+        ])
+
+        return response
+
     def handle_GET(self, request: HTTPRequest) -> bytes:
+        """Handler for GET HTTP method"""
 
         filename = request.uri.strip('/')
 

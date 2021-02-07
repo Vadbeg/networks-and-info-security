@@ -1,5 +1,6 @@
 """Module with TCP server implementation"""
 
+import time
 import socket
 
 
@@ -19,11 +20,22 @@ class TCPServer:
         while True:
             conn, addr = s.accept()
             print("Connected by", addr)
-            data = conn.recv(1024)
+            data = conn.recv(1024 * 10_000)
 
             response = self.handle_request(data)
 
-            conn.sendall(response)
+            res = conn.sendall(response)
+            conn.shutdown(socket.SHUT_WR)
+
+            counter = 0
+            while True:
+                new_data = conn.recv(20)
+                counter += 1
+
+                if new_data == b'':
+                    print(f'Received additional {counter * 20} bytes of data')
+                    break
+
             conn.close()
 
     def handle_request(self, data):

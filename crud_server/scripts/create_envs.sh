@@ -1,0 +1,5 @@
+export DATABASE_HOST='localhost'
+export DATABASE_PORT='5432'
+export DATABASE_USER='pbz1'
+export DATABASE_PASSWORD='pbz1'
+export DATABASE_NAME='pbz1'

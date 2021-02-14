@@ -1,0 +1,20 @@
+version: "3.3"
+
+services:
+  crud-server:
+    build: .
+    ports:
+    - "9000:9000"
+    depends_on:
+      - postgres_db
+    environment:
+      - DB_URI=postgres://vadbeg:password@postgres_db:5432/database  # Change params to your own
+#     URI string description: https://stackoverflow.com/questions/3582552/postgresql-connection-url
+  postgres_db:
+    image: postgres:10.5
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=database
+      - POSTGRES_USER=vadbeg
+      - POSTGRES_PASSWORD=password

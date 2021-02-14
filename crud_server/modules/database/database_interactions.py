@@ -1,8 +1,39 @@
 """Module with database interactions"""
 
+import time
 from typing import Tuple
 
 import psycopg2
+
+
+def connect_to_database(host: str = 'localhost', port: str = '3306',
+                        user: str = 'root', password: str = 'root',
+                        database: str = 'documents') -> Tuple:
+    """
+    Waits until database is initiated
+    """
+
+    while True:
+        try:
+            print(host)
+            print(port)
+            print(user)
+            print(password)
+            print(database)
+
+            connection, cursor = create_connection(host=host,
+                                                   port=port,
+                                                   user=user,
+                                                   password=password,
+                                                   database=database)
+        except psycopg2.OperationalError as err:
+            print(f'Waiting for database...')
+            print(err)
+            # time.sleep(0.)
+        else:
+            break
+
+    return connection, cursor
 
 
 def create_connection(host: str = 'localhost', port: str = '3306',
@@ -12,7 +43,6 @@ def create_connection(host: str = 'localhost', port: str = '3306',
     Creates connection to PostgreSQL database
     It returns connection and cursor, because of weak connection problem.
 
-    :url: https://stackoverflow.com/questions/1482141/what-does-it-mean-weakly-referenced-object-no-longer-exists
     :return: connection and cursor for PostgreSQL databse
     """
 

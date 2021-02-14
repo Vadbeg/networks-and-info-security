@@ -8,8 +8,11 @@ services:
     depends_on:
       - postgres_db
     environment:
-      - DB_URI=postgres://vadbeg:password@postgres_db:5432/database  # Change params to your own
-#     URI string description: https://stackoverflow.com/questions/3582552/postgresql-connection-url
+      - DATABASE_HOST=postgres_db
+      - DATABASE_PORT=5432
+      - DATABASE_USER=vadbeg
+      - DATABASE_PASSWORD=password
+      - DATABASE_NAME=database
   postgres_db:
     image: postgres:10.5
     ports:

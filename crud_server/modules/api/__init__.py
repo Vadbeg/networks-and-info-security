@@ -20,7 +20,13 @@ def create_app(test_config=None) -> Flask:
     else:
         app.config.update(test_config)
 
-    from crud_server.modules.api import routes
+    try:
+        print(f'I am here')
+        from crud_server.modules.api import routes
+    except ModuleNotFoundError as err:
+        print(f'I am there')
+        from modules.api import routes
+
     app.register_blueprint(routes.blue_print)
 
     app.add_url_rule('/', endpoint='index')

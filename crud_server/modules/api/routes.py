@@ -1,19 +1,31 @@
 """Module with routes for Flask application"""
 
 import os
+import time
 from datetime import datetime
 
+import psycopg2
 from flask import (Blueprint, Flask,
                    render_template,
                    request, abort,
                    redirect, url_for)
 
-from crud_server.modules.database.database_interactions import create_connection, close_connection
-from crud_server.modules.database.document import Document
-from crud_server.modules.database.user import User
-from crud_server.modules.database.task import Task
+try:
+    # Used for server setup using command line
+    from crud_server.modules.database.database_interactions import close_connection, connect_to_database
+    from crud_server.modules.database.document import Document
+    from crud_server.modules.database.user import User
+    from crud_server.modules.database.task import Task
 
-from crud_server.modules.api.schemas import AddNewUser, AddNewDocument, AddNewTask, UpdateTableSchema
+    from crud_server.modules.api.schemas import AddNewUser, AddNewDocument, AddNewTask, UpdateTableSchema
+except ModuleNotFoundError as err:
+    # Used for server setup using Docker
+    from modules.database.database_interactions import close_connection, connect_to_database
+    from modules.database.document import Document
+    from modules.database.user import User
+    from modules.database.task import Task
+
+    from modules.api.schemas import AddNewUser, AddNewDocument, AddNewTask, UpdateTableSchema
 
 
 blue_print = Blueprint('documentation', __name__)
@@ -24,11 +36,11 @@ database_user = os.getenv('DATABASE_USER', default='user')
 database_password = os.getenv('DATABASE_PASSWORD', default='password')
 database_name = os.getenv('DATABASE_NAME', default='database')
 
-connection, cursor = create_connection(host=database_host,
-                                       port=database_port,
-                                       user=database_user,
-                                       password=database_password,
-                                       database=database_name)
+connection, cursor = connect_to_database(host=database_host,
+                                         port=database_port,
+                                         user=database_user,
+                                         password=database_password,
+                                         database=database_name)
 
 
 @blue_print.route('/')

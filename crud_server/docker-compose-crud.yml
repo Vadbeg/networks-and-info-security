@@ -21,3 +21,5 @@ services:
       - POSTGRES_DB=database
       - POSTGRES_USER=vadbeg
       - POSTGRES_PASSWORD=password
+    volumes:
+    - ./database_scripts/schema.sql:/docker-entrypoint-initdb.d/init-schema.sql

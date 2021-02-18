@@ -40,14 +40,16 @@ class Document:
         add_document_query = """
 INSERT INTO document (document_name, document_type, date_of_creation, date_of_registration)
 VALUES (%s, %s, %s, %s)
+RETURNING id
         """
 
         val = [document_name, document_type, date_of_creation, date_of_registration]
 
         self.cursor.execute(add_document_query, val)
-        self.connection.commit()
 
-        document_id = self.cursor.lastrowid
+        document_id = self.cursor.fetchone()[0]
+
+        self.connection.commit()
 
         for curr_creator_id in creators_ids:
             self.__add_document_creator__(document_id=document_id, creator_id=curr_creator_id)
@@ -185,8 +187,8 @@ WHERE document_id = %s
 
         get_all_document_creators_query = """
 SELECT id, first_name, second_name
-FROM user
-WHERE user.id in (%s)
+FROM "user"
+WHERE "user".id in (%s)
         """
         val = ', '.join(['%s'] * len(all_document_creators_id))
         get_all_document_creators_query = get_all_document_creators_query.replace('%s', val)
@@ -224,8 +226,8 @@ WHERE document_id = %s
 
         get_all_document_controllers_query = """
         SELECT id, first_name, second_name
-        FROM user
-        WHERE user.id in (%s)
+        FROM "user"
+        WHERE "user".id in (%s)
                 """
         val = ', '.join(['%s'] * len(all_document_controllers_id))
         get_all_document_controllers_query = get_all_document_controllers_query.replace('%s', val)

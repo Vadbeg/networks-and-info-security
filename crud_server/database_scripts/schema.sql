@@ -6,6 +6,7 @@ DROP TABLE IF EXISTS document;
 
 
 CREATE TABLE document (
+
     id SERIAL PRIMARY KEY,
     document_name VARCHAR(50),
     document_type VARCHAR(25),

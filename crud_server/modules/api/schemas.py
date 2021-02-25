@@ -59,3 +59,11 @@ class UpdateTableSchema(Schema):
     """Schema for updating table"""
 
     last_n_days = fields.Int(required=False, default=0)
+
+
+class AddNewFactory(Schema):
+    """Schema for adding new user"""
+
+    factory_name = fields.Str(required=True)
+    size = fields.Int(required=True)
+    city = fields.Str(required=True)

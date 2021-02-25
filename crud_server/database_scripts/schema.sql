@@ -25,16 +25,28 @@ CREATE TABLE "user" (
 
 );
 
+
+CREATE TABLE factory (
+    id SERIAL PRIMARY KEY,
+    factory_name VARCHAR(50),
+    size INTEGER,
+    city VARCHAR(50)
+);
+
+
 CREATE TABLE task (
-    id SERIAL PRIMARY KEY ,
+    id SERIAL PRIMARY KEY,
     task_name VARCHAR(50),
 
     executor_id INTEGER,  /* Only one executor for one task */
     document_id INTEGER,
+    factory_id INTEGER,
 
     FOREIGN KEY (executor_id) REFERENCES "user" (id),
-    FOREIGN KEY (document_id) REFERENCES document (id) ON DELETE CASCADE
+    FOREIGN KEY (document_id) REFERENCES document (id) ON DELETE CASCADE,
+    FOREIGN KEY (factory_id) REFERENCES factory (id) ON DELETE CASCADE
 );
+
 
 
 CREATE TABLE document_creator (

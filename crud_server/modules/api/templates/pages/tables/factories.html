@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<table class="styled-table">
+    <thead>
+        <tr>
+            <th>id</th>
+            <th>Factory name</th>
+            <th>Size</th>
+            <th>City</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for curr_factory in all_factories %}
+    <tr>
+        <td>{{ curr_factory.id }}</td>
+        <td>{{ curr_factory.factory_name }}</td>
+        <td>{{ curr_factory.size }}</td>
+        <td>{{ curr_factory.city }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<a href="{{ url_for('documentation.home') }}" class="button-link">Go Home</a>
+
+
+{% endblock %}

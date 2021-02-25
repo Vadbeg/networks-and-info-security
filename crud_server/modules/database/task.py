@@ -7,6 +7,7 @@ class Task:
     COLUMNS_TASK = [
         'id', 'task_name',
         'executor_id', 'document_id',
+        'factory_id'
     ]
 
     def __init__(self, connection, cursor):
@@ -20,22 +21,24 @@ class Task:
         self.connection = connection
         self.cursor = cursor
 
-    def add_task(self, task_name: str, executor_id: int, document_id: int):
+    def add_task(self, task_name: str, executor_id: int,
+                 document_id: int, factory_id: int):
         """
         Adds task to the database
 
         :param task_name: name of the task
         :param executor_id: id of the executor
-        :param document_id: if of the document
+        :param document_id: id of the document
+        :param factory_id: id of the factory
         :return:
         """
 
         add_user_query = """
-INSERT INTO task (task_name, executor_id, document_id)
-VALUES (%s, %s, %s)
+INSERT INTO task (task_name, executor_id, document_id, factory_id)
+VALUES (%s, %s, %s, %s)
         """
 
-        val = [task_name, executor_id, document_id]
+        val = [task_name, executor_id, document_id, factory_id]
 
         self.cursor.execute(add_user_query, val)
         self.connection.commit()

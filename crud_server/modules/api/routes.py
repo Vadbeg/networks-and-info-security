@@ -16,16 +16,22 @@ try:
     from crud_server.modules.database.document import Document
     from crud_server.modules.database.user import User
     from crud_server.modules.database.task import Task
+    from crud_server.modules.database.factory import Factory
 
-    from crud_server.modules.api.schemas import AddNewUser, AddNewDocument, AddNewTask, UpdateTableSchema
+    from crud_server.modules.api.schemas import (AddNewUser, AddNewDocument,
+                                                 AddNewTask, UpdateTableSchema,
+                                                 AddNewFactory)
 except ModuleNotFoundError as err:
     # Used for server setup using Docker
     from modules.database.database_interactions import close_connection, connect_to_database
     from modules.database.document import Document
     from modules.database.user import User
     from modules.database.task import Task
+    from modules.database.factory import Factory
 
-    from modules.api.schemas import AddNewUser, AddNewDocument, AddNewTask, UpdateTableSchema
+    from modules.api.schemas import (AddNewUser, AddNewDocument,
+                                     AddNewTask, UpdateTableSchema,
+                                     AddNewFactory)
 
 
 blue_print = Blueprint('documentation', __name__)
@@ -79,6 +85,21 @@ def show_documents():
     }
 
     return render_template('pages/tables/documents.html', **context)
+
+
+@blue_print.route('/factories')
+def show_factories():
+    """View with factories table"""
+
+    factory = Factory(connection=connection, cursor=cursor)
+
+    all_factories = factory.get_all_factories()
+
+    context = {
+        'all_factories': all_factories
+    }
+
+    return render_template('pages/tables/factories.html', **context)
 
 
 @blue_print.route('/add_user', methods=("GET", "POST"))
@@ -159,6 +180,32 @@ def add_document():
         return redirect(url_for('documentation.show_documents'))
 
     return render_template('pages/inputs/add_document.html', **context)
+
+
+@blue_print.route('/add_factory', methods=("GET", "POST"))
+def add_factory():
+    """View for adding new factories (form)"""
+
+    if request.method == 'POST':
+        add_new_factory_schema = AddNewFactory()
+
+        errors = add_new_factory_schema.validate(data=request.form)
+
+        if errors:
+            abort(400, str(errors))
+
+        args = add_new_factory_schema.dump(request.form)
+
+        factory = Factory(connection=connection, cursor=cursor)
+        factory.add_factory(
+            factory_name=args['factory_name'],
+            size=args['size'],
+            city=args['city']
+        )
+
+        return redirect(url_for('documentation.home'))
+
+    return render_template('pages/inputs/add_factory.html')
 
 
 @blue_print.route('/add_task', defaults={'document_idx': None}, methods=("GET", "POST"))

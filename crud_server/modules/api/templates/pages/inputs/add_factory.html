@@ -1,0 +1,40 @@
+
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Add new factory{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+    <a href="{{ url_for('documentation.home') }}" class="button-link">Go Home</a>
+
+    <div class="login-box">
+        <h2>Create new factory</h2>
+
+      <form method="post">
+
+          <div class="user-box">
+              <input type="text"
+                     id="factory_name"
+                     name="factory_name" required="">
+              <label>factory_name</label>
+          </div>
+
+          <div class="user-box">
+              <input type="text"
+                     id="size"
+                     name="size" required="">
+              <label>size</label>
+          </div>
+
+          <div class="user-box">
+              <input type="text"
+                     id="city"
+                     name="city" required="">
+              <label>city</label>
+          </div>
+
+          <input type="submit" value="Register">
+      </form>
+    </div>
+{% endblock %}

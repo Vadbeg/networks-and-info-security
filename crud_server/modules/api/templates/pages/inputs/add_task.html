@@ -44,6 +44,18 @@
               <label class="select-label">choose_executor</label>
           </div>
 
+          <div class="user-box" style="clear: both;">
+              <select style="text-align: right"
+                      name="factory_id"
+                      id="factories" required="">
+
+                  {% for curr_factory in all_factories %}
+                  <option value="{{ curr_factory.id }}">{{ curr_factory.id }}. {{ curr_factory.factory_name }}</option>
+                  {% endfor %}
+              </select>
+              <label class="select-label">choose_factory</label>
+          </div>
+
           <input type="submit" class="button" value="Register">
       </form>
     </div>

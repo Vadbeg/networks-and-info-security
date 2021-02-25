@@ -53,6 +53,7 @@ class AddNewTask(Schema):
 
     executor_id = fields.Int(required=True)
     document_id = fields.Int(required=True)
+    factory_id = fields.Int(required=True)
 
 
 class UpdateTableSchema(Schema):

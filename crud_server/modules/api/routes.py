@@ -224,13 +224,16 @@ def add_task(document_idx: int):
     user = User(connection=connection, cursor=cursor)
     all_users = user.get_all_users()
 
+    factory = Factory(connection=connection, cursor=cursor)
+    all_factories = factory.get_all_factories()
+
     context = {
         'all_documents': all_documents,
-        'all_users': all_users
+        'all_users': all_users,
+        'all_factories': all_factories
     }
 
     if request.method == 'POST':
-        print(request.form)
 
         add_new_task_schema = AddNewTask()
         errors = add_new_task_schema.validate(data=request.form)
@@ -245,7 +248,8 @@ def add_task(document_idx: int):
         task.add_task(
             task_name=args['task_name'],
             executor_id=args['executor_id'],
-            document_id=args['document_id']
+            document_id=args['document_id'],
+            factory_id=args['factory_id']
         )
 
         if document_idx:

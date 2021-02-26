@@ -15,7 +15,7 @@
     <tr>
         <td>{{ curr_document.id }}</td>
         <td>
-            <a href="{{ url_for('documentation.show_one_document', idx=curr_document.id) }}">
+            <a href="{{ url_for('show_documentation.show_one_document', idx=curr_document.id) }}">
                 {{ curr_document.document_name }}
             </a>
         </td>

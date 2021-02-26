@@ -12,6 +12,7 @@ from flask import (Blueprint, Flask,
 
 try:
     # Used for server setup using command line
+    from crud_server.modules.api.database_connection import connection, cursor
     from crud_server.modules.database.database_interactions import close_connection, connect_to_database
     from crud_server.modules.database.document import Document
     from crud_server.modules.database.user import User
@@ -23,6 +24,7 @@ try:
                                                  AddNewFactory)
 except ModuleNotFoundError as err:
     # Used for server setup using Docker
+    from modules.api.database_connection import connection, cursor
     from modules.database.database_interactions import close_connection, connect_to_database
     from modules.database.document import Document
     from modules.database.user import User
@@ -34,75 +36,18 @@ except ModuleNotFoundError as err:
                                      AddNewFactory)
 
 
-blue_print = Blueprint('documentation', __name__)
-
-database_host = os.getenv('DATABASE_HOST', default='localhost')
-database_port = os.getenv('DATABASE_PORT', default='5432')
-database_user = os.getenv('DATABASE_USER', default='user')
-database_password = os.getenv('DATABASE_PASSWORD', default='password')
-database_name = os.getenv('DATABASE_NAME', default='database')
-
-connection, cursor = connect_to_database(host=database_host,
-                                         port=database_port,
-                                         user=database_user,
-                                         password=database_password,
-                                         database=database_name)
+all_blue_print = Blueprint('documentation', __name__)
 
 
-@blue_print.route('/')
-@blue_print.route('/home')
+@all_blue_print.route('/')
+@all_blue_print.route('/home')
 def home():
     """Home tab"""
 
     return render_template('pages/home.html')
 
 
-@blue_print.route('/users')
-def show_users():
-    """View with users table"""
-
-    user = User(connection=connection, cursor=cursor)
-
-    all_users = user.get_all_users()
-
-    context = {
-        'all_users': all_users
-    }
-
-    return render_template('pages/tables/users.html', **context)
-
-
-@blue_print.route('/documents')
-def show_documents():
-    """View with documents table"""
-
-    document = Document(connection=connection, cursor=cursor)
-
-    all_documents = document.get_all_documents()
-
-    context = {
-        'all_documents': all_documents
-    }
-
-    return render_template('pages/tables/documents.html', **context)
-
-
-@blue_print.route('/factories')
-def show_factories():
-    """View with factories table"""
-
-    factory = Factory(connection=connection, cursor=cursor)
-
-    all_factories = factory.get_all_factories()
-
-    context = {
-        'all_factories': all_factories
-    }
-
-    return render_template('pages/tables/factories.html', **context)
-
-
-@blue_print.route('/add_user', methods=("GET", "POST"))
+@all_blue_print.route('/add_user', methods=("GET", "POST"))
 def add_user():
     """View for adding new users (form)"""
 
@@ -132,7 +77,7 @@ def add_user():
     return render_template('pages/inputs/add_user.html')
 
 
-@blue_print.route('/add_document', methods=("GET", "POST"))
+@all_blue_print.route('/add_document', methods=("GET", "POST"))
 def add_document():
     """View for adding new documents (form)"""
 
@@ -182,7 +127,7 @@ def add_document():
     return render_template('pages/inputs/add_document.html', **context)
 
 
-@blue_print.route('/add_factory', methods=("GET", "POST"))
+@all_blue_print.route('/add_factory', methods=("GET", "POST"))
 def add_factory():
     """View for adding new factories (form)"""
 
@@ -208,8 +153,8 @@ def add_factory():
     return render_template('pages/inputs/add_factory.html')
 
 
-@blue_print.route('/add_task', defaults={'document_idx': None}, methods=("GET", "POST"))
-@blue_print.route('/add_task/<int:document_idx>', methods=("GET", "POST"))
+@all_blue_print.route('/add_task', defaults={'document_idx': None}, methods=("GET", "POST"))
+@all_blue_print.route('/add_task/<int:document_idx>', methods=("GET", "POST"))
 def add_task(document_idx: int):
     """View for adding new tasks (form)"""
 
@@ -260,82 +205,7 @@ def add_task(document_idx: int):
     return render_template('pages/inputs/add_task.html', **context)
 
 
-@blue_print.route('/show_tasks')
-def show_tasks():
-    """View for showing new tasks"""
-
-    task = Task(connection=connection, cursor=cursor)
-
-    all_tasks = task.get_all_tasks()
-
-    context = {
-        'all_tasks': all_tasks
-    }
-
-    return render_template('pages/tables/tasks.html', **context)
-
-
-@blue_print.route('/show_one_document/<int:idx>', methods=("GET", "POST"))
-def show_one_document(idx: int):
-    """View for one document page"""
-
-    document = Document(connection=connection, cursor=cursor)
-    document_description = document.get_document_by_id(document_id=idx)
-
-    task = Task(connection=connection, cursor=cursor)
-    all_document_tasks = task.get_task_by_document_id(document_id=idx)
-
-    context = {
-        'document_description': document_description,
-        'all_document_tasks': all_document_tasks
-    }
-
-    return render_template('pages/settings/document.html', **context)
-
-
-@blue_print.route('/show_one_factory/<int:idx>', methods=("GET", "POST"))
-def show_one_factory(idx: int):
-    """View for one factory page"""
-
-    factory = Factory(connection=connection, cursor=cursor)
-    factory_description = factory.get_factory_by_id(factory_id=idx)
-
-    context = {
-        'factory_description': factory_description,
-    }
-
-    return render_template('pages/settings/factory.html', **context)
-
-
-@blue_print.route('/show_one_task/<int:idx>', methods=("GET", "POST"))
-def show_one_task(idx: int):
-    """View for one task page"""
-
-    task = Task(connection=connection, cursor=cursor)
-    task_description = task.get_task_by_id(task_id=idx)
-
-    context = {
-        'task_description': task_description,
-    }
-
-    return render_template('pages/settings/task.html', **context)
-
-
-@blue_print.route('/show_one_user/<int:idx>', methods=("GET", "POST"))
-def show_one_user(idx: int):
-    """View for one user page"""
-
-    user = User(connection=connection, cursor=cursor)
-    user_description = user.get_user_by_id(user_id=idx)
-
-    context = {
-        'user_description': user_description,
-    }
-
-    return render_template('pages/settings/user.html', **context)
-
-
-@blue_print.route('/update_table')
+@all_blue_print.route('/update_table')
 def update_table():
     """View for table updating (using JQuery and ajax)"""
 
@@ -364,7 +234,7 @@ def update_table():
     return render_template('pages/tables/documents_table.html', **context)
 
 
-@blue_print.route('/change_document/<int:document_idx>', methods=("GET", "POST"))
+@all_blue_print.route('/change_document/<int:document_idx>', methods=("GET", "POST"))
 def change_document(document_idx: int):
     """View for document changing"""
 
@@ -437,5 +307,5 @@ def change_document(document_idx: int):
 
         return redirect(url_for('documentation.show_one_document', idx=document_to_change['id']))
 
-    return render_template('pages/inputs/change_document.html', **context)
+    return render_template('pages/changes/change_document.html', **context)
 

@@ -19,7 +19,7 @@
     <tr>
         <td>{{ curr_user.id }}</td>
         <td>
-            <a href="{{ url_for('documentation.show_one_user', idx=curr_user.id) }}">
+            <a href="{{ url_for('show_documentation.show_one_user', idx=curr_user.id) }}">
                 {{ curr_user.first_name }}
             </a>
         </td>
@@ -33,7 +33,7 @@
     </tbody>
 </table>
 
-<a href="{{ url_for('documentation.home') }}" class="button-link">Go Home</a>
+<a href="{{ url_for('show_documentation.home') }}" class="button-link">Go Home</a>
 
 
 {% endblock %}

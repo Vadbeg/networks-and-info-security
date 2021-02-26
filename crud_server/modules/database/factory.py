@@ -14,7 +14,7 @@ class Factory:
         Class for faster interactions with factory table
 
         :param connection: connection to database
-        :param cursor: cursor for database
+        :param curso`r: cursor for database
         """
 
         self.connection = connection
@@ -81,3 +81,26 @@ WHERE factory.id = %s
         factory = dict(zip(self.COLUMNS_FACTORY, factory))
 
         return factory
+
+    def change_factory(self, factory_id: int, factory_name: str, size: int, city: str):
+        """
+        For changing factory in database
+
+        :param factory_id: index of factory to change
+        :param factory_name: factory name
+        :param size: factory size
+        :param city: factory city
+        """
+
+        change_document_query = """
+UPDATE factory
+SET factory_name = %s, size = %s,
+    city=%s
+WHERE factory.id = %s;
+        """
+
+        val = [factory_name, size, city, factory_id]
+
+        self.cursor.execute(change_document_query, val)
+        self.connection.commit()
+

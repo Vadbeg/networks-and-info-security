@@ -114,3 +114,38 @@ def change_document(document_idx: int):
 
     return render_template('pages/changes/change_document.html', **context)
 
+
+@change_blue_print.route('/change_factory/<int:factory_idx>', methods=("GET", "POST"))
+def change_factory(factory_idx: int):
+    """View for factory changing"""
+
+    factory = Factory(connection=connection, cursor=cursor)
+
+    factory_to_change = factory.get_factory_by_id(factory_id=factory_idx)
+
+    context = {
+        'factory': factory_to_change,
+    }
+
+    if request.method == 'POST':
+        add_new_factory_schema = AddNewFactory()
+        errors = add_new_factory_schema.validate(data=request.form)
+
+        if errors:
+            abort(400, str(errors))
+
+        args = add_new_factory_schema.dump(request.form)
+
+        factory = Factory(connection=connection, cursor=cursor)
+
+        factory.change_factory(
+            factory_id=factory_idx,
+            factory_name=args['factory_name'],
+            size=args['size'],
+            city=args['city'],
+        )
+
+        return redirect(url_for('show_documentation.show_one_factory', idx=factory_to_change['id']))
+
+    return render_template('pages/changes/change_factory.html', **context)
+

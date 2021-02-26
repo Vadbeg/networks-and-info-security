@@ -36,10 +36,10 @@ except ModuleNotFoundError as err:
                                      AddNewFactory)
 
 
-all_blue_print = Blueprint('documentation', __name__)
+change_blue_print = Blueprint('change_documentation', __name__)
 
 
-@all_blue_print.route('/change_document/<int:document_idx>', methods=("GET", "POST"))
+@change_blue_print.route('/change_document/<int:document_idx>', methods=("GET", "POST"))
 def change_document(document_idx: int):
     """View for document changing"""
 

@@ -122,7 +122,7 @@ def add_document():
             creators_ids=args['creators_ids'],
         )
 
-        return redirect(url_for('documentation.show_documents'))
+        return redirect(url_for('show_documentation.show_documents'))
 
     return render_template('pages/inputs/add_document.html', **context)
 
@@ -198,40 +198,11 @@ def add_task(document_idx: int):
         )
 
         if document_idx:
-            return redirect(url_for('documentation.show_one_document', idx=document_idx))
+            return redirect(url_for('show_documentation.show_one_document', idx=document_idx))
         else:
-            return redirect(url_for('documentation.show_tasks'))
+            return redirect(url_for('show_documentation.show_tasks'))
 
     return render_template('pages/inputs/add_task.html', **context)
-
-
-@all_blue_print.route('/update_table')
-def update_table():
-    """View for table updating (using JQuery and ajax)"""
-
-    update_table_schema = UpdateTableSchema()
-
-    errors = update_table_schema.validate(request.args)
-
-    # if user inputs not number or nothing, than show him all entries
-    if errors:
-        last_n_days = 0
-    else:
-        args = update_table_schema.dump(request.args)
-        last_n_days = args['last_n_days']
-
-    document = Document(connection=connection, cursor=cursor)
-
-    if last_n_days == 0:
-        documents_by_date = document.get_all_documents()
-    else:
-        documents_by_date = document.get_document_by_date(document_n_days=last_n_days)
-
-    context = {
-        'all_documents': documents_by_date
-    }
-
-    return render_template('pages/tables/documents_table.html', **context)
 
 
 @all_blue_print.route('/change_document/<int:document_idx>', methods=("GET", "POST"))
@@ -305,7 +276,7 @@ def change_document(document_idx: int):
             creators_ids=args['creators_ids'],
         )
 
-        return redirect(url_for('documentation.show_one_document', idx=document_to_change['id']))
+        return redirect(url_for('show_documentation.show_one_document', idx=document_to_change['id']))
 
     return render_template('pages/changes/change_document.html', **context)
 

@@ -166,3 +166,32 @@ def show_one_user(idx: int):
 
     return render_template('pages/settings/user.html', **context)
 
+
+@show_blue_print.route('/update_table')
+def update_table():
+    """View for table updating (using JQuery and ajax)"""
+
+    update_table_schema = UpdateTableSchema()
+
+    errors = update_table_schema.validate(request.args)
+
+    # if user inputs not number or nothing, than show him all entries
+    if errors:
+        last_n_days = 0
+    else:
+        args = update_table_schema.dump(request.args)
+        last_n_days = args['last_n_days']
+
+    document = Document(connection=connection, cursor=cursor)
+
+    if last_n_days == 0:
+        documents_by_date = document.get_all_documents()
+    else:
+        documents_by_date = document.get_document_by_date(document_n_days=last_n_days)
+
+    context = {
+        'all_documents': documents_by_date
+    }
+
+    return render_template('pages/tables/documents_table.html', **context)
+

@@ -85,3 +85,28 @@ WHERE task.document_id = %s
 
         return all_tasks
 
+    def get_task_by_id(self, task_id: int) -> Dict:
+        """
+        Finds task in database by its id and returns it.
+
+        :param task_id: id of the task
+        :return: task with given id
+        """
+
+        get_task_query = """
+SELECT *
+FROM task
+WHERE task.id = %s
+        """
+
+        val = [task_id]
+
+        self.cursor.execute(get_task_query, val)
+        task = self.cursor.fetchall()[0]
+
+        task = dict(zip(self.COLUMNS_TASK, task))
+
+        return task
+
+
+

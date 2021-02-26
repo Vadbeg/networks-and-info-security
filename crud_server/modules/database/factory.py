@@ -76,8 +76,8 @@ WHERE factory.id = %s
         val = [factory_id]
 
         self.cursor.execute(get_factory_query, val)
-        document = self.cursor.fetchall()[0]
+        factory = self.cursor.fetchall()[0]
 
-        document = dict(zip(self.COLUMNS_FACTORY, document))
+        factory = dict(zip(self.COLUMNS_FACTORY, factory))
 
-        return document
+        return factory

@@ -64,3 +64,26 @@ FROM "user"
 
         return all_users
 
+    def get_user_by_id(self, user_id: int) -> Dict:
+        """
+        Finds user in database by its id and returns it.
+
+        :param user_id: id of the user
+        :return: user with given id
+        """
+
+        get_user_query = """
+SELECT *
+FROM "user"
+WHERE "user".id = %s
+        """
+
+        val = [user_id]
+
+        self.cursor.execute(get_user_query, val)
+        user = self.cursor.fetchall()[0]
+
+        user = dict(zip(self.COLUMNS, user))
+
+        return user
+

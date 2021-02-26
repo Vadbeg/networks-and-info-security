@@ -290,7 +290,49 @@ def show_one_document(idx: int):
         'all_document_tasks': all_document_tasks
     }
 
-    return render_template('pages/document.html', **context)
+    return render_template('pages/settings/document.html', **context)
+
+
+@blue_print.route('/show_one_factory/<int:idx>', methods=("GET", "POST"))
+def show_one_factory(idx: int):
+    """View for one factory page"""
+
+    factory = Factory(connection=connection, cursor=cursor)
+    factory_description = factory.get_factory_by_id(factory_id=idx)
+
+    context = {
+        'factory_description': factory_description,
+    }
+
+    return render_template('pages/settings/factory.html', **context)
+
+
+@blue_print.route('/show_one_task/<int:idx>', methods=("GET", "POST"))
+def show_one_task(idx: int):
+    """View for one task page"""
+
+    task = Task(connection=connection, cursor=cursor)
+    task_description = task.get_task_by_id(task_id=idx)
+
+    context = {
+        'task_description': task_description,
+    }
+
+    return render_template('pages/settings/task.html', **context)
+
+
+@blue_print.route('/show_one_user/<int:idx>', methods=("GET", "POST"))
+def show_one_user(idx: int):
+    """View for one user page"""
+
+    user = User(connection=connection, cursor=cursor)
+    user_description = user.get_user_by_id(user_id=idx)
+
+    context = {
+        'user_description': user_description,
+    }
+
+    return render_template('pages/settings/user.html', **context)
 
 
 @blue_print.route('/update_table')

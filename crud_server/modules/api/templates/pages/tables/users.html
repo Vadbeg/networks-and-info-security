@@ -18,7 +18,11 @@
     {% for curr_user in all_users %}
     <tr>
         <td>{{ curr_user.id }}</td>
-        <td>{{ curr_user.first_name }}</td>
+        <td>
+            <a href="{{ url_for('documentation.show_one_user', idx=curr_user.id) }}">
+                {{ curr_user.first_name }}
+            </a>
+        </td>
         <td>{{ curr_user.second_name }}</td>
         <td>{{ curr_user.is_internal }}</td>
         <td>{{ curr_user.position }}</td>

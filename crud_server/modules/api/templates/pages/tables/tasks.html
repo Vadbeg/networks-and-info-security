@@ -16,7 +16,11 @@
     {% for curr_task in all_tasks %}
     <tr>
         <td>{{ curr_task.id }}</td>
-        <td>{{ curr_task.task_name }}</td>
+        <td>
+            <a href="{{ url_for('documentation.show_one_task', idx=curr_task.id) }}">
+                {{ curr_task.task_name }}
+            </a>
+        </td>
         <td>{{ curr_task.executor_id }}</td>
         <td>{{ curr_task.document_id }}</td>
         <td>{{ curr_task.factory_id }}</td>

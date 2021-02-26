@@ -15,7 +15,11 @@
     {% for curr_factory in all_factories %}
     <tr>
         <td>{{ curr_factory.id }}</td>
-        <td>{{ curr_factory.factory_name }}</td>
+        <td>
+            <a href="{{ url_for('documentation.show_one_factory', idx=curr_factory.id) }}">
+                {{ curr_factory.factory_name }}
+            </a>
+        </td>
         <td>{{ curr_factory.size }}</td>
         <td>{{ curr_factory.city }}</td>
     </tr>

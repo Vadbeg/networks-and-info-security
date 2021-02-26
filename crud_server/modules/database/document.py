@@ -302,7 +302,7 @@ WHERE document.id = %s
         get_all_documents_query = """
 SELECT *
 FROM document
-WHERE document.date_of_registration > DATE_SUB(now(), INTERVAL %s DAY)
+WHERE document.date_of_registration > NOW() - INTERVAL '%s' DAY
         """
 
         val = [document_n_days]

@@ -214,3 +214,50 @@ def change_task(task_idx: int):
         return redirect(url_for('show_documentation.show_tasks'))
 
     return render_template('pages/changes/change_task.html', **context)
+
+
+@change_blue_print.route('/change_user/<int:user_idx>', methods=("GET", "POST"))
+def change_user(user_idx: int):
+    """View for user changing"""
+
+    user = User(connection=connection, cursor=cursor)
+
+    user_to_change = user.get_user_by_id(user_id=user_idx)
+
+    context = {
+        'user': user_to_change,
+    }
+
+    print(f'WTF1' * 15)
+
+    if request.method == 'POST':
+        add_new_user_schema = AddNewUser()
+
+        errors = add_new_user_schema.validate(data=request.form)
+
+        print(f'WTF2' * 15)
+
+        if errors:
+            abort(400, str(errors))
+
+        args = add_new_user_schema.dump(request.form)
+
+        print(args['is_internal'])
+        print(f'WTF3' * 15)
+
+        user = User(connection=connection, cursor=cursor)
+        user.change_user(
+            user_id=user_idx,
+            first_name=args['first_name'],
+            second_name=args['second_name'],
+            is_internal=args['is_internal'],
+
+            position=args['position'],
+            email=args['email'],
+            phone_number=args['phone_number']
+        )
+
+        return redirect(url_for('show_documentation.show_users'))
+
+    return render_template('pages/changes/change_user.html', **context)
+

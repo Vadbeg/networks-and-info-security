@@ -1,0 +1,65 @@
+
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Change user{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+    <a href="{{ url_for('show_documentation.home') }}" class="button-link">Go Home</a>
+
+    <div class="login-box">
+        <h2>Change user</h2>
+
+      <form method="post">
+
+          <div class="user-box">
+              <input type="text"
+                     id="first_name" value="{{ user.first_name }}"
+                     name="first_name" required="">
+              <label>first_name</label>
+          </div>
+
+          <div class="user-box">
+              <input type="text"
+                     id="second_name" value="{{ user.second_name }}"
+                     name="second_name" required="">
+              <label>second_name</label>
+          </div>
+
+          <div class="user-box">
+              <input type="text"
+                     id="position" value="{{ user.position }}"
+                     name="position" required="">
+              <label>position</label>
+          </div>
+
+          <div class="user-box">
+              <input type="text"
+                     name="email" value="{{ user.email }}"
+                     id="email" required="">
+              <label>email</label>
+          </div>
+
+          <div class="user-box">
+              <input type="text"
+                     name="phone_number" value="{{ user.phone_number }}"
+                     id="phone_number" required="">
+              <label>phone_number</label>
+          </div>
+
+          <div class="user-box">
+              <input type="checkbox"
+                     name="is_internal"
+                     value="on"
+                     {% if user.is_internal %}
+                     checked
+                     {% endif %}
+                     id="is_internal">
+              <label>is_internal</label>
+          </div>
+
+          <input type="submit" value="Register">
+      </form>
+    </div>
+{% endblock %}

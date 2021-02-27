@@ -87,3 +87,34 @@ WHERE "user".id = %s
 
         return user
 
+    def change_user(self, user_id: int, first_name: str, second_name: str,
+                    is_internal: Union[bool, int], position: str,
+                    email: str, phone_number: str):
+        """
+        Changes use in database
+
+        :param user_id: index of the user
+        :param first_name: first name of user
+        :param second_name: second name of user
+        :param is_internal: is user is internal - True(1) else False (0)
+        :param position: position of the user
+        :param email: email of the user
+        :param phone_number: phone number of the user
+        """
+
+        print(is_internal)
+
+        change_user_query = """
+UPDATE "user"
+SET first_name = %s, second_name = %s,
+    is_internal=%s, position=%s,
+    email=%s, phone_number=%s
+WHERE "user".id = %s;
+        """
+
+        val = [first_name, second_name, is_internal, position, email, phone_number, user_id]
+
+        self.cursor.execute(change_user_query, val)
+        self.connection.commit()
+
+

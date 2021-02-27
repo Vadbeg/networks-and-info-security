@@ -225,10 +225,10 @@ WHERE document_id = %s
         all_document_controllers_id = list(sum(all_document_controllers_id, ()))
 
         get_all_document_controllers_query = """
-        SELECT id, first_name, second_name
-        FROM "user"
-        WHERE "user".id in (%s)
-                """
+SELECT id, first_name, second_name
+FROM "user"
+WHERE "user".id in (%s)
+        """
         val = ', '.join(['%s'] * len(all_document_controllers_id))
         get_all_document_controllers_query = get_all_document_controllers_query.replace('%s', val)
 
@@ -334,3 +334,6 @@ WHERE document.id = %s;
 
         self.cursor.execute(delete_document_query, val)
         self.connection.commit()
+
+    def delete_document_if_no_executors(self):
+        pass

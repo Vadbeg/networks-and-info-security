@@ -125,8 +125,8 @@ WHERE "user".id = %s;
         """
 
         delete_user_query = """
-DELETE FROM user
-WHERE user.id = %s;
+DELETE FROM "user"
+WHERE "user".id = %s;
                 """
 
         val = [user_id]

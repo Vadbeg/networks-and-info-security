@@ -69,7 +69,7 @@ CREATE TABLE document_controller (
     FOREIGN KEY (document_id) REFERENCES document (id)
         ON DELETE CASCADE
         ON UPDATE CASCADE,
-    FOREIGN KEY (controller_id) REFERENCES "user" (id)
+        FOREIGN KEY (controller_id) REFERENCES "user" (id)
         ON DELETE CASCADE
         ON UPDATE CASCADE
 );

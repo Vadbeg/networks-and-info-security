@@ -25,15 +25,18 @@ def create_app(test_config=None) -> Flask:
         from crud_server.modules.api.routes.show_routes import show_blue_print
         from crud_server.modules.api.routes.change_routes import change_blue_print
         from crud_server.modules.api.routes.add_routes import add_blue_print
+        from crud_server.modules.api.routes.delete_routes import delete_blue_print
     except ModuleNotFoundError as err:
         print(f'I am there')
         from modules.api.routes.show_routes import show_blue_print
         from modules.api.routes.change_routes import change_blue_print
         from modules.api.routes.add_routes import add_blue_print
+        from modules.api.routes.delete_routes import delete_blue_print
 
     app.register_blueprint(show_blue_print)
     app.register_blueprint(change_blue_print)
     app.register_blueprint(add_blue_print)
+    app.register_blueprint(delete_blue_print)
 
     app.add_url_rule('/', endpoint='index')
 

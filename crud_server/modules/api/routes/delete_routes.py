@@ -1,15 +1,8 @@
 """Module with functions for items removing"""
 
 
-import os
-import time
-from datetime import datetime
-
-import psycopg2
-from flask import (Blueprint, Flask,
-                   render_template,
-                   request, abort,
-                   redirect, url_for)
+from flask import (Blueprint,
+                   render_template)
 
 try:
     # Used for server setup using command line
@@ -37,35 +30,72 @@ except ModuleNotFoundError as err:
                                      AddNewFactory)
 
 
-delete_blue_print = Blueprint('delet_documentation', __name__)
+delete_blue_print = Blueprint('delete_documentation', __name__)
 
 
-@delete_blue_print.route('/delete_user/<int:user_idx>', methods=("GET", "POST"))
-def add_user():
-    """View for adding new users (form)"""
+@delete_blue_print.route('/delete_document/<int:document_idx>', methods=["GET"])
+def delete_document(document_idx: int):
+    """View for deleting document"""
 
-    if request.method == 'POST':
-        add_new_user_schema = AddNewUser()
+    document = Document(connection=connection, cursor=cursor)
 
-        errors = add_new_user_schema.validate(data=request.form)
+    document.delete_document(document_id=document_idx)
 
-        if errors:
-            abort(400, str(errors))
+    all_documents = document.get_all_documents()
 
-        args = add_new_user_schema.dump(request.form)
+    context = {
+        'all_documents': all_documents
+    }
 
-        user = User(connection=connection, cursor=cursor)
-        user.add_user(
-            first_name=args['first_name'],
-            second_name=args['second_name'],
-            is_internal=args['is_internal'],
+    return render_template('pages/tables/documents.html', **context)
 
-            position=args['position'],
-            email=args['email'],
-            phone_number=args['phone_number']
-        )
 
-        return redirect(url_for('show_documentation.show_users'))
+@delete_blue_print.route('/delete_factory/<int:factory_idx>', methods=["GET"])
+def delete_factory(factory_idx: int):
+    """View for deleting factory"""
 
-    return render_template('pages/inputs/add_user.html')
+    factory = Factory(connection=connection, cursor=cursor)
 
+    factory.delete_factory(factory_id=factory_idx)
+
+    all_factories = factory.get_all_factories()
+
+    context = {
+        'all_factories': all_factories
+    }
+
+    return render_template('pages/tables/factories.html', **context)
+
+
+@delete_blue_print.route('/delete_task/<int:task_idx>', methods=["GET"])
+def delete_task(task_idx: int):
+    """View for deleting factory"""
+
+    task = Task(connection=connection, cursor=cursor)
+
+    task.delete_task(task_id=task_idx)
+
+    all_tasks = task.get_all_tasks()
+
+    context = {
+        'all_tasks': all_tasks
+    }
+
+    return render_template('pages/tables/tasks.html', **context)
+
+
+@delete_blue_print.route('/delete_user/<int:user_idx>', methods=["GET"])
+def delete_user(user_idx: int):
+    """View for deleting users"""
+
+    user = User(connection=connection, cursor=cursor)
+
+    user.delete_user(user_id=user_idx)
+
+    all_users = user.get_all_users()
+
+    context = {
+        'all_users': all_users
+    }
+
+    return render_template('pages/tables/users.html', **context)

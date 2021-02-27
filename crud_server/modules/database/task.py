@@ -133,5 +133,22 @@ WHERE task.id = %s;
         self.cursor.execute(change_task_query, val)
         self.connection.commit()
 
+    def delete_task(self, task_id: int):
+        """
+        Deletes task by id from database
+
+        :param task_id: id of the factory
+        """
+
+        delete_task_query = """
+DELETE FROM task
+WHERE task.id = %s;
+                """
+
+        val = [task_id]
+
+        self.cursor.execute(delete_task_query, val)
+        self.connection.commit()
+
 
 

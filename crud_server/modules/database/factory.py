@@ -104,3 +104,19 @@ WHERE factory.id = %s;
         self.cursor.execute(change_document_query, val)
         self.connection.commit()
 
+    def delete_factory(self, factory_id: int):
+        """
+        Deletes factory by id from database
+
+        :param factory_id: id of the factory
+        """
+
+        delete_factory_query = """
+DELETE FROM factory
+WHERE factory.id = %s;
+                """
+
+        val = [factory_id]
+
+        self.cursor.execute(delete_factory_query, val)
+        self.connection.commit()

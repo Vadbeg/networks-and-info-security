@@ -317,3 +317,20 @@ WHERE document.date_of_registration > NOW() - INTERVAL '%s' DAY
             curr_document['creators'] = self.__get_document_creators__(curr_document['id'])
 
         return all_documents
+
+    def delete_document(self, document_id: int):
+        """
+        Deletes document by id from database
+
+        :param document_id: id of the document
+        """
+
+        delete_document_query = """
+DELETE FROM document
+WHERE document.id = %s;
+                """
+
+        val = [document_id]
+
+        self.cursor.execute(delete_document_query, val)
+        self.connection.commit()

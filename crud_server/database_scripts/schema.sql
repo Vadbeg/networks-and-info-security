@@ -22,7 +22,6 @@ CREATE TABLE "user" (
     position VARCHAR(25),
     email VARCHAR(50),
     phone_number VARCHAR(25)
-
 );
 
 
@@ -42,9 +41,11 @@ CREATE TABLE task (
     document_id INTEGER,
     factory_id INTEGER,
 
-    FOREIGN KEY (executor_id) REFERENCES "user" (id),
-    FOREIGN KEY (document_id) REFERENCES document (id) ON DELETE CASCADE,
-    FOREIGN KEY (factory_id) REFERENCES factory (id) ON DELETE CASCADE
+    FOREIGN KEY (executor_id) REFERENCES "user" (id)
+        ON DELETE CASCADE ,
+    FOREIGN KEY (document_id) REFERENCES document (id)
+        ON DELETE CASCADE,
+    FOREIGN KEY (factory_id) REFERENCES factory (id)
 );
 
 

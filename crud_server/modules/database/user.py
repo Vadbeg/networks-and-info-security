@@ -117,4 +117,21 @@ WHERE "user".id = %s;
         self.cursor.execute(change_user_query, val)
         self.connection.commit()
 
+    def delete_user(self, user_id: int):
+        """
+        Deletes user by id from database
+
+        :param user_id: id of the factory
+        """
+
+        delete_user_query = """
+DELETE FROM user
+WHERE user.id = %s;
+                """
+
+        val = [user_id]
+
+        self.cursor.execute(delete_user_query, val)
+        self.connection.commit()
+
 

@@ -149,3 +149,68 @@ def change_factory(factory_idx: int):
 
     return render_template('pages/changes/change_factory.html', **context)
 
+
+@change_blue_print.route('/change_task/<int:task_idx>', methods=("GET", "POST"))
+def change_task(task_idx: int):
+    """View for task changing"""
+
+    task = Task(connection=connection, cursor=cursor)
+    task_to_change = task.get_task_by_id(task_id=task_idx)
+
+    document = Document(connection=connection, cursor=cursor)
+    all_documents = document.get_all_documents()
+
+    user = User(connection=connection, cursor=cursor)
+    all_users = user.get_all_users()
+
+    factory = Factory(connection=connection, cursor=cursor)
+    all_factories = factory.get_all_factories()
+
+    for curr_user in all_users:
+        if curr_user['id'] == task_to_change['executor_id']:
+            curr_user['is_in_users'] = True
+        else:
+            curr_user['is_in_users'] = False
+
+    for curr_document in all_documents:
+        if curr_document['id'] == task_to_change['document_id']:
+            curr_document['is_in_documents'] = True
+        else:
+            curr_document['is_in_documents'] = False
+
+    for curr_factory in all_factories:
+        if curr_factory['id'] == task_to_change['factory_id']:
+            curr_factory['is_in_factories'] = True
+        else:
+            curr_factory['is_in_factories'] = False
+
+    context = {
+        'task': task_to_change,
+        'all_documents': all_documents,
+        'all_users': all_users,
+        'all_factories': all_factories
+    }
+
+    if request.method == 'POST':
+
+        add_new_task_schema = AddNewTask()
+        errors = add_new_task_schema.validate(data=request.form)
+
+        if errors:
+            abort(400, str(errors))
+
+        args = add_new_task_schema.dump(request.form)
+
+        task = Task(connection=connection, cursor=cursor)
+
+        task.change_task(
+            task_id=task_idx,
+            task_name=args['task_name'],
+            executor_id=args['executor_id'],
+            document_id=args['document_id'],
+            factory_id=args['factory_id']
+        )
+
+        return redirect(url_for('show_documentation.show_tasks'))
+
+    return render_template('pages/changes/change_task.html', **context)

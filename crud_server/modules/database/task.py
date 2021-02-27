@@ -108,5 +108,30 @@ WHERE task.id = %s
 
         return task
 
+    def change_task(self, task_id: int, task_name: str, executor_id: int,
+                    document_id: int, factory_id: int):
+        """
+        Adds task to the database
+
+        :param task_id: index of the task
+        :param task_name: name of the task
+        :param executor_id: id of the executor
+        :param document_id: id of the document
+        :param factory_id: id of the factory
+        :return:
+        """
+
+        change_task_query = """
+UPDATE task
+SET task_name = %s, executor_id = %s,
+    document_id = %s, factory_id = %s
+WHERE task.id = %s;
+        """
+
+        val = [task_name, executor_id, document_id, factory_id, task_id]
+
+        self.cursor.execute(change_task_query, val)
+        self.connection.commit()
+
 
 

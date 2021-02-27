@@ -1,0 +1,68 @@
+
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Change task{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+    <a href="{{ url_for('show_documentation.home') }}" class="button-link">Go Home</a>
+
+    <div class="login-box">
+        <h2>Create new task</h2>
+
+      <form method="post">
+
+          <div class="user-box">
+              <input type="text"
+                     id="task_name" value="{{ task.task_name }}"
+                     name="task_name" required="">
+              <label>task_name</label>
+          </div>
+
+          <div class="user-box">
+              <select style="text-align: right"
+                      name="document_id"
+                      id="documents" required="">
+
+                  {% for curr_document in all_documents %}
+                  <option value="{{ curr_document.id }}" {% if curr_document.is_in_documents %} selected {% endif %}>
+                      {{ curr_document.id }}. {{ curr_document.document_name }}
+                  </option>
+                  {% endfor %}
+              </select>
+              <label class="select-label">choose_document</label>
+          </div>
+
+          <div class="user-box" style="clear: both;">
+              <select style="text-align: right"
+                      name="executor_id"
+                      id="executors" required="">
+
+                  {% for curr_user in all_users %}
+                  <option value="{{ curr_user.id }}" {% if curr_user.is_in_users %} selected {% endif %}>
+                      {{ curr_user.id }}. {{ curr_user.first_name }} {{ curr_user.second_name }}
+                  </option>
+                  {% endfor %}
+              </select>
+              <label class="select-label">choose_executor</label>
+          </div>
+
+          <div class="user-box" style="clear: both;">
+              <select style="text-align: right"
+                      name="factory_id"
+                      id="factories" required="">
+
+                  {% for curr_factory in all_factories %}
+                  <option value="{{ curr_factory.id }}" {% if curr_factory.is_in_factories %} selected {% endif %}>
+                      {{ curr_factory.id }}. {{ curr_factory.factory_name }}
+                  </option>
+                  {% endfor %}
+              </select>
+              <label class="select-label">choose_factory</label>
+          </div>
+
+          <input type="submit" class="button" value="Register">
+      </form>
+    </div>
+{% endblock %}

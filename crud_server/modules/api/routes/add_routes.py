@@ -1,11 +1,8 @@
 """Module with routes for Flask application"""
 
-import os
-import time
 from datetime import datetime
 
-import psycopg2
-from flask import (Blueprint, Flask,
+from flask import (Blueprint,
                    render_template,
                    request, abort,
                    redirect, url_for)

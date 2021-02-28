@@ -1,11 +1,8 @@
 """Module with routes for Flask application"""
 
-import os
-import time
 from datetime import datetime
 
-import psycopg2
-from flask import (Blueprint, Flask,
+from flask import (Blueprint,
                    render_template,
                    request, abort,
                    redirect, url_for)
@@ -228,22 +225,15 @@ def change_user(user_idx: int):
         'user': user_to_change,
     }
 
-    print(f'WTF1' * 15)
-
     if request.method == 'POST':
         add_new_user_schema = AddNewUser()
 
         errors = add_new_user_schema.validate(data=request.form)
 
-        print(f'WTF2' * 15)
-
         if errors:
             abort(400, str(errors))
 
         args = add_new_user_schema.dump(request.form)
-
-        print(args['is_internal'])
-        print(f'WTF3' * 15)
 
         user = User(connection=connection, cursor=cursor)
         user.change_user(

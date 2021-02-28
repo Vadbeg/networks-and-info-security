@@ -1,6 +1,5 @@
 """Module with database interactions"""
 
-import time
 from typing import Tuple
 
 import psycopg2
@@ -15,12 +14,6 @@ def connect_to_database(host: str = 'localhost', port: str = '3306',
 
     while True:
         try:
-            print(host)
-            print(port)
-            print(user)
-            print(password)
-            print(database)
-
             connection, cursor = create_connection(host=host,
                                                    port=port,
                                                    user=user,

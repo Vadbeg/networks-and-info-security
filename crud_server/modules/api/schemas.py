@@ -2,7 +2,7 @@
 
 from datetime import datetime
 
-from marshmallow import Schema, fields, validate
+from marshmallow import Schema, fields
 
 
 class DateTimeField(fields.DateTime):

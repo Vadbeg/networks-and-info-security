@@ -15,19 +15,15 @@ def create_app(test_config=None) -> Flask:
 
     app.config.from_mapping(SECRET_KEY='dev')
 
-    if test_config is None:
-        app.config.from_pyfile('config.py', silent=True)
-    else:
+    if test_config:
         app.config.update(test_config)
 
     try:
-        print(f'I am here')
         from crud_server.modules.api.routes.show_routes import show_blue_print
         from crud_server.modules.api.routes.change_routes import change_blue_print
         from crud_server.modules.api.routes.add_routes import add_blue_print
         from crud_server.modules.api.routes.delete_routes import delete_blue_print
     except ModuleNotFoundError as err:
-        print(f'I am there')
         from modules.api.routes.show_routes import show_blue_print
         from modules.api.routes.change_routes import change_blue_print
         from modules.api.routes.add_routes import add_blue_print

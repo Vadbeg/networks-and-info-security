@@ -335,5 +335,69 @@ WHERE document.id = %s;
         self.cursor.execute(delete_document_query, val)
         self.connection.commit()
 
-    def delete_document_if_no_executors(self):
-        pass
+    def __get_documents_id_with_no_creators(self) -> List[int]:
+        """
+        Finds all document id which have no creators
+
+        :return: list with ids
+        """
+
+        get_ids_no_creators_query = """
+WITH id_with_creators AS (
+    SELECT DISTINCT document_id
+    FROM document_creator
+)
+SELECT document.id
+FROM document
+WHERE document.id not in (
+    SELECT document_id
+    FROM id_with_creators
+    );
+        """
+
+        self.cursor.execute(get_ids_no_creators_query)
+        no_creators_ids = self.cursor.fetchall()
+
+        no_creators_ids = [curr_row[0] for curr_row in no_creators_ids]
+
+        return no_creators_ids
+
+    def __get_documents_id_with_no_controllers(self) -> List[int]:
+        """
+        Finds all document id which have no controllers
+
+        :return: list with ids
+        """
+
+        get_ids_no_controllers_query = """
+WITH id_with_controllers AS (
+    SELECT DISTINCT document_id
+    FROM document_controller
+)
+SELECT document.id
+FROM document
+WHERE document.id not in (
+    SELECT document_id
+    FROM id_with_controllers
+    );
+        """
+
+        self.cursor.execute(get_ids_no_controllers_query)
+        no_controllers_ids = self.cursor.fetchall()
+
+        no_controllers_ids = [curr_row[0] for curr_row in no_controllers_ids]
+
+        return no_controllers_ids
+
+    def delete_documents_with_no_users_assigned(self):
+        """
+        Deletes from database documents with no controllers or creatorse assigned
+        """
+
+        documents_id_with_no_creators = self.__get_documents_id_with_no_creators()
+        documents_id_with_no_controllers = self.__get_documents_id_with_no_controllers()
+
+        documents_id_to_delete = set(documents_id_with_no_creators + documents_id_with_no_controllers)
+
+        for curr_document_id_to_delete in documents_id_to_delete:
+            self.delete_document(document_id=curr_document_id_to_delete)

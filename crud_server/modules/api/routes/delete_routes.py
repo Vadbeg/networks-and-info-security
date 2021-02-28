@@ -89,8 +89,10 @@ def delete_user(user_idx: int):
     """View for deleting users"""
 
     user = User(connection=connection, cursor=cursor)
+    document = Document(connection=connection, cursor=cursor)
 
     user.delete_user(user_id=user_idx)
+    document.delete_documents_with_no_users_assigned()
 
     all_users = user.get_all_users()
 

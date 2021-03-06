@@ -84,12 +84,13 @@ def add_document():
     }
 
     if request.method == 'POST':
-        creators_ids = request.args.getlist('choose_creators')  # if there is no such name, returns empty list
-        controllers_ids = request.args.getlist('choose_controllers')
+        creators_ids = request.args.getlist('creators_ids')  # if there is no such name, returns empty list
+        controllers_ids = request.args.getlist('controllers_ids')
 
         request_args = dict(request.args)
-        request_args.pop('choose_creators')  # there is no need in it now
-        request_args.pop('choose_controllers')
+
+        request_args.pop('creators_ids')  # there is no need in it now
+        request_args.pop('controllers_ids')
 
         request_args['creators_ids'] = creators_ids
         request_args['controllers_ids'] = controllers_ids

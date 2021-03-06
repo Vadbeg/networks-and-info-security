@@ -37,11 +37,11 @@ except ModuleNotFoundError as err:
                                      AddNewFactory)
 
 
-show_blue_print = Blueprint('show_documentation', __name__, url_prefix=os.environ['API_PREFIX'])
+get_blue_print = Blueprint('get_documentation', __name__, url_prefix=os.environ['API_PREFIX'])
 
 
-@show_blue_print.route('/users')
-def show_users():
+@get_blue_print.route('/users')
+def get_users():
     """View with users table"""
 
     user = User(connection=connection, cursor=cursor)
@@ -55,8 +55,8 @@ def show_users():
     return make_response(jsonify(context), StatusCodes.OK)
 
 
-@show_blue_print.route('/documents')
-def show_documents():
+@get_blue_print.route('/documents')
+def get_documents():
     """View with documents table"""
 
     document = Document(connection=connection, cursor=cursor)
@@ -70,8 +70,8 @@ def show_documents():
     return make_response(jsonify(context), StatusCodes.OK)
 
 
-@show_blue_print.route('/factories')
-def show_factories():
+@get_blue_print.route('/factories')
+def get_factories():
     """View with factories table"""
 
     factory = Factory(connection=connection, cursor=cursor)
@@ -85,8 +85,8 @@ def show_factories():
     return make_response(jsonify(context), StatusCodes.OK)
 
 
-@show_blue_print.route('/show_tasks')
-def show_tasks():
+@get_blue_print.route('/show_tasks')
+def get_tasks():
     """View for showing new tasks"""
 
     task = Task(connection=connection, cursor=cursor)
@@ -100,8 +100,8 @@ def show_tasks():
     return make_response(jsonify(context), StatusCodes.OK)
 
 
-@show_blue_print.route('/show_one_document/<int:idx>', methods=("GET", "POST"))
-def show_one_document(idx: int):
+@get_blue_print.route('/get_one_document/<int:idx>', methods=("GET", "POST"))
+def get_one_document(idx: int):
     """View for one document page"""
 
     document = Document(connection=connection, cursor=cursor)
@@ -118,8 +118,8 @@ def show_one_document(idx: int):
     return make_response(jsonify(context), StatusCodes.OK)
 
 
-@show_blue_print.route('/show_one_factory/<int:idx>', methods=("GET", "POST"))
-def show_one_factory(idx: int):
+@get_blue_print.route('/get_one_factory/<int:idx>', methods=("GET", "POST"))
+def get_one_factory(idx: int):
     """View for one factory page"""
 
     factory = Factory(connection=connection, cursor=cursor)
@@ -132,8 +132,8 @@ def show_one_factory(idx: int):
     return make_response(jsonify(context), StatusCodes.OK)
 
 
-@show_blue_print.route('/show_one_task/<int:idx>', methods=("GET", "POST"))
-def show_one_task(idx: int):
+@get_blue_print.route('/get_one_task/<int:idx>', methods=("GET", "POST"))
+def get_one_task(idx: int):
     """View for one task page"""
 
     task = Task(connection=connection, cursor=cursor)
@@ -146,8 +146,8 @@ def show_one_task(idx: int):
     return make_response(jsonify(context), StatusCodes.OK)
 
 
-@show_blue_print.route('/show_one_user/<int:idx>', methods=("GET", "POST"))
-def show_one_user(idx: int):
+@get_blue_print.route('/get_one_user/<int:idx>', methods=("GET", "POST"))
+def get_one_user(idx: int):
     """View for one user page"""
 
     user = User(connection=connection, cursor=cursor)
@@ -160,8 +160,8 @@ def show_one_user(idx: int):
     return make_response(jsonify(context), StatusCodes.OK)
 
 
-@show_blue_print.route('/update_table')
-def update_table():
+@get_blue_print.route('/update_table')
+def get_tables_by_date():
     """View for table updating (using JQuery and ajax)"""
 
     update_table_schema = UpdateTableSchema()

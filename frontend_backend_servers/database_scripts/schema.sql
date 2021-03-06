@@ -42,10 +42,11 @@ CREATE TABLE task (
     factory_id INTEGER,
 
     FOREIGN KEY (executor_id) REFERENCES "user" (id)
-        ON DELETE CASCADE ,
+        ON DELETE CASCADE,
     FOREIGN KEY (document_id) REFERENCES document (id)
         ON DELETE CASCADE,
     FOREIGN KEY (factory_id) REFERENCES factory (id)
+        ON DELETE CASCADE
 );
 
 

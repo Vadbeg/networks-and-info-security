@@ -85,7 +85,7 @@ def get_factories():
     return make_response(jsonify(context), StatusCodes.OK)
 
 
-@get_blue_print.route('/show_tasks')
+@get_blue_print.route('/tasks')
 def get_tasks():
     """View for showing new tasks"""
 

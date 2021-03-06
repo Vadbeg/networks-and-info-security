@@ -1,0 +1,25 @@
+version: "3.3"
+
+services:
+#  crud-server:
+#    build: .
+#    ports:
+#    - "9000:9000"
+#    depends_on:
+#      - postgres_db
+#    environment:
+#      - DATABASE_HOST=postgres_db
+#      - DATABASE_PORT=5432
+#      - DATABASE_USER=vadbeg
+#      - DATABASE_PASSWORD=password
+#      - DATABASE_NAME=database
+  postgres_db:
+    image: postgres:10.5
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=database
+      - POSTGRES_USER=vadbeg
+      - POSTGRES_PASSWORD=password
+    volumes:
+    - ./database_scripts/schema.sql:/docker-entrypoint-initdb.d/init-schema.sql

@@ -49,12 +49,12 @@ def add_user():
     if request.method == 'POST':
         add_new_user_schema = AddNewUser()
 
-        errors = add_new_user_schema.validate(data=request.form)
+        errors = add_new_user_schema.validate(data=request.args)
 
         if errors:
             abort(StatusCodes.BadRequest, str(errors))
 
-        args = add_new_user_schema.dump(request.form)
+        args = add_new_user_schema.dump(request.args)
 
         user = User(connection=connection, cursor=cursor)
         user.add_user(
@@ -84,28 +84,28 @@ def add_document():
     }
 
     if request.method == 'POST':
-        creators_ids = request.form.getlist('choose_creators')  # if there is no such name, returns empty list
-        controllers_ids = request.form.getlist('choose_controllers')
+        creators_ids = request.args.getlist('choose_creators')  # if there is no such name, returns empty list
+        controllers_ids = request.args.getlist('choose_controllers')
 
-        request_form = dict(request.form)
-        request_form.pop('choose_creators')  # there is no need in it now
-        request_form.pop('choose_controllers')
+        request_args = dict(request.args)
+        request_args.pop('choose_creators')  # there is no need in it now
+        request_args.pop('choose_controllers')
 
-        request_form['creators_ids'] = creators_ids
-        request_form['controllers_ids'] = controllers_ids
+        request_args['creators_ids'] = creators_ids
+        request_args['controllers_ids'] = controllers_ids
 
-        request_form['date_of_creation'] = datetime.strptime(request_form['date_of_creation'],
+        request_args['date_of_creation'] = datetime.strptime(request_args['date_of_creation'],
                                                              '%Y-%m-%d')
-        request_form['date_of_registration'] = datetime.strptime(request_form['date_of_registration'],
+        request_args['date_of_registration'] = datetime.strptime(request_args['date_of_registration'],
                                                                  '%Y-%m-%d')
 
         add_new_document_schema = AddNewDocument()
-        errors = add_new_document_schema.validate(data=request_form)
+        errors = add_new_document_schema.validate(data=request_args)
 
         if errors:
             abort(StatusCodes.BadRequest, str(errors))
 
-        args = add_new_document_schema.dump(request_form)
+        args = add_new_document_schema.dump(request_args)
 
         document = Document(connection=connection, cursor=cursor)
         document.add_document(
@@ -129,12 +129,12 @@ def add_factory():
     if request.method == 'POST':
         add_new_factory_schema = AddNewFactory()
 
-        errors = add_new_factory_schema.validate(data=request.form)
+        errors = add_new_factory_schema.validate(data=request.args)
 
         if errors:
             abort(400, str(errors))
 
-        args = add_new_factory_schema.dump(request.form)
+        args = add_new_factory_schema.dump(request.args)
 
         factory = Factory(connection=connection, cursor=cursor)
         factory.add_factory(
@@ -176,12 +176,12 @@ def add_task(document_idx: int):
     if request.method == 'POST':
 
         add_new_task_schema = AddNewTask()
-        errors = add_new_task_schema.validate(data=request.form)
+        errors = add_new_task_schema.validate(data=request.args)
 
         if errors:
             abort(400, str(errors))
 
-        args = add_new_task_schema.dump(request.form)
+        args = add_new_task_schema.dump(request.args)
 
         task = Task(connection=connection, cursor=cursor)
 

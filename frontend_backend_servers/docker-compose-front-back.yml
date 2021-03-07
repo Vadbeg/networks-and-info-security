@@ -1,18 +1,27 @@
 version: "3.3"
 
 services:
-#  crud-server:
-#    build: .
-#    ports:
-#    - "9000:9000"
-#    depends_on:
-#      - postgres_db
-#    environment:
-#      - DATABASE_HOST=postgres_db
-#      - DATABASE_PORT=5432
-#      - DATABASE_USER=vadbeg
-#      - DATABASE_PASSWORD=password
-#      - DATABASE_NAME=database
+  backend-server:
+    build: ./backend
+    ports:
+    - "9000:9000"
+    depends_on:
+      - postgres_db
+    environment:
+      - DATABASE_HOST=postgres_db
+      - DATABASE_PORT=5432
+      - DATABASE_USER=vadbeg
+      - DATABASE_PASSWORD=password
+      - DATABASE_NAME=database
+      - API_PREFIX=/api/v_0
+  frontend-server:
+    build: ./frontend
+    ports:
+      - "7000:7000"
+    depends_on:
+      - backend-server
+    environment:
+      - ROOT_BACKEND_URI=http://backend-server:9000/api/v_0/
   postgres_db:
     image: postgres:10.5
     ports:

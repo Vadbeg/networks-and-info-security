@@ -2,13 +2,12 @@
 
 import requests
 import urllib.parse
-from datetime import datetime
 from typing import List, Dict
 
 
 class Task:
     __GET_TASKS_REL_PATH = 'tasks'
-    __GET_ONE_TASK_REL_PATH = 'get_one_factory'
+    __GET_ONE_TASK_REL_PATH = 'get_one_task'
 
     __ADD_TASK_REL_PATH = 'add_task'
     __CHANGE_TASK_REL_PATH = 'change_task'
@@ -23,44 +22,52 @@ class Task:
 
         self.root_uri = root_uri
 
-    def get_all_tasks(self):
+    def get_all_tasks(self) -> List[Dict]:
+        """
+        Gets all tasks from database threw backend API
+
+        :return: list of tasks info
         """
 
-        :return:
-        """
         get_tasks_url = urllib.parse.urljoin(self.root_uri, self.__GET_TASKS_REL_PATH)
 
         response = requests.get(get_tasks_url)
         result = response.json()
 
-        result = result['all_tasks']
+        all_tasks = result['all_tasks']
 
-        return result
+        return all_tasks
 
-    def get_one_task(self, task_id: int):
+    def get_one_task(self, task_id: int) -> Dict:
+        """
+        Gets one task from database threw backend API
+
+        :param task_id: task index
+        :return: task info
         """
 
-        :return:
-        """
         get_one_task_url = urllib.parse.urljoin(self.root_uri, self.__GET_ONE_TASK_REL_PATH)
         get_one_task_url = get_one_task_url + '/'
 
         get_one_task_url = urllib.parse.urljoin(get_one_task_url, str(task_id))
 
         response = requests.get(get_one_task_url)
-        result = response.json()
 
-        return result
+        result = response.json()
+        task_description = result['task_description']
+
+        return task_description
 
     def add_task(self, task_name: str, executor_id: str,
-                 document_id: int, factory_id: int):
+                 document_id: int, factory_id: int) -> int:
         """
+        Adds task to database threw backend API
 
-        :param task_name:
-        :param executor_id:
-        :param document_id:
-        :param factory_id:
-        :return:
+        :param task_name: name of new task
+        :param executor_id: index of the executor
+        :param document_id: index of document
+        :param factory_id: index of factory
+        :return: status code
         """
 
         add_task_url = urllib.parse.urljoin(self.root_uri, self.__ADD_TASK_REL_PATH)
@@ -77,7 +84,17 @@ class Task:
         return response.status_code
 
     def change_task(self, task_id: int, task_name: str, executor_id: str,
-                    document_id: int, factory_id: int):
+                    document_id: int, factory_id: int) -> int:
+        """
+        Changes task in database threw backend API
+
+        :param task_id: index of task to change
+        :param task_name: name of task
+        :param executor_id: index of executor
+        :param document_id: index of document
+        :param factory_id: index of factory
+        :return: status code
+        """
 
         change_one_task_url = urllib.parse.urljoin(self.root_uri, self.__CHANGE_TASK_REL_PATH)
         change_one_task_url = change_one_task_url + '/'
@@ -95,11 +112,14 @@ class Task:
 
         return response.status_code
 
-    def delete_task(self, task_id: int):
+    def delete_task(self, task_id: int) -> int:
+        """
+        Deletes task from database threw backend API
+
+        :param task_id: index of task to delete
+        :return: status code
         """
 
-        :return:
-        """
         delete_one_task_url = urllib.parse.urljoin(self.root_uri, self.__DELETE_TASK_REL_PATH)
         delete_one_task_url = delete_one_task_url + '/'
 

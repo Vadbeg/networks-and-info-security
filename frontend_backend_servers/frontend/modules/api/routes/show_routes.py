@@ -100,11 +100,7 @@ def show_one_document(idx: int):
     """View for one document page"""
 
     document = Document(root_uri=os.environ['ROOT_BACKEND_URI'])
-    document_description = document.get_one_document(document_id=idx)
-
-    # task = Task(root_uri=os.environ['ROOT_BACKEND_URI'])
-    # all_document_tasks = task.get_task_by_document_id(document_id=idx)
-    all_document_tasks = None  # TODO: Change it!
+    document_description, all_document_tasks = document.get_one_document(document_id=idx)
 
     context = {
         'document_description': document_description,

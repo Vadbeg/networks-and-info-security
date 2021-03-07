@@ -1,9 +1,9 @@
-"""Module with interactions for document table"""
+"""Module with interactions for document table threw backend"""
 
 import requests
 import urllib.parse
 from datetime import datetime
-from typing import List, Dict
+from typing import List, Dict, Tuple
 
 
 class Document:
@@ -23,24 +23,28 @@ class Document:
 
         self.root_uri = root_uri
 
-    def get_all_documents(self):
+    def get_all_documents(self) -> List[Dict]:
         """
+        Gets all documents info from backend server
 
         :return:
         """
+
         get_documents_url = urllib.parse.urljoin(self.root_uri, self.__GET_DOCUMENTS_REL_PATH)
 
         response = requests.get(get_documents_url)
         result = response.json()
 
-        result = result['all_documents']
+        all_documents = result['all_documents']
 
-        return result
+        return all_documents
 
-    def get_one_document(self, document_id: int):
+    def get_one_document(self, document_id: int) -> Tuple[List[Dict], Dict]:
         """
+        Gets info for on document and all task for it from backend server
 
-        :return:
+        :param document_id: document index
+        :return: list of tasks for one document, document info
         """
 
         get_one_document_url = urllib.parse.urljoin(self.root_uri, self.__GET_ONE_DOCUMENT_REL_PATH)
@@ -51,20 +55,24 @@ class Document:
         response = requests.get(get_one_document_url)
         result = response.json()
 
-        return result
+        document_description = result['document_description']
+        all_document_tasks = result['all_document_tasks']
+
+        return document_description, all_document_tasks
 
     def add_document(self, document_name: str, document_type: str,
                      creators_ids: List[int], controllers_ids: List[int],
-                     date_of_creation: datetime, date_of_registration: datetime):
+                     date_of_creation: datetime, date_of_registration: datetime) -> int:
         """
+        Adds document to database threw backend
 
-        :param document_name:
-        :param document_type:
-        :param creators_ids:
-        :param controllers_ids:
-        :param date_of_creation:
-        :param date_of_registration:
-        :return:
+        :param document_name: name of document
+        :param document_type: type of document
+        :param creators_ids: list of creators indexes
+        :param controllers_ids: list of controllers indexes
+        :param date_of_creation: date of document creation
+        :param date_of_registration: date of document registration
+        :return: status code
         """
 
         add_document_url = urllib.parse.urljoin(self.root_uri, self.__ADD_DOCUMENT_REL_PATH)
@@ -84,7 +92,19 @@ class Document:
 
     def change_document(self, document_id: int, document_name: str, document_type: str,
                         creators_ids: List[int], controllers_ids: List[int],
-                        date_of_creation: datetime, date_of_registration: datetime):
+                        date_of_creation: datetime, date_of_registration: datetime) -> int:
+        """
+        Changes document in database threw backend
+
+        :param document_id: index of document to change
+        :param document_name: name of document
+        :param document_type: type of document
+        :param creators_ids: list of creators indexes
+        :param controllers_ids: list of controllers indexes
+        :param date_of_creation: date of document creation
+        :param date_of_registration: date of document registration
+        :return: status code
+        """
 
         change_one_document_url = urllib.parse.urljoin(self.root_uri, self.__CHANGE_DOCUMENT_REL_PATH)
         change_one_document_url = change_one_document_url + '/'
@@ -104,11 +124,14 @@ class Document:
 
         return response.status_code
 
-    def delete_document(self, document_id: int):
+    def delete_document(self, document_id: int) -> int:
+        """
+        Deletes document in database threw backend
+
+        :param document_id: index of document to delete
+        :return: status code
         """
 
-        :return:
-        """
         delete_one_document_url = urllib.parse.urljoin(self.root_uri, self.__DELETE_DOCUMENT_REL_PATH)
         delete_one_document_url = delete_one_document_url + '/'
 

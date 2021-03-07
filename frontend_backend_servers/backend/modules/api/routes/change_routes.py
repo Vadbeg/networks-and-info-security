@@ -4,10 +4,8 @@ import os
 from datetime import datetime
 
 from flask import (Blueprint, Response,
-                   render_template,
                    make_response, jsonify,
-                   request, abort,
-                   redirect, url_for)
+                   request, abort)
 
 try:
     # Used for server setup using command line
@@ -45,38 +43,11 @@ change_blue_print = Blueprint('change_documentation', __name__, url_prefix=os.en
 def change_document(document_idx: int):
     """View for document changing"""
 
-    document = Document(connection=connection, cursor=cursor)
-
-    document_to_change = document.get_document_by_id(document_id=document_idx)
-
-    document_to_change['date_of_creation'] = datetime.strftime(document_to_change['date_of_creation'],
-                                                               '%Y-%m-%d')
-    document_to_change['date_of_registration'] = datetime.strftime(document_to_change['date_of_registration'],
-                                                                   '%Y-%m-%d')
-
-    document_controllers = [curr_controller['id'] for curr_controller in document_to_change['controllers']]
-    document_creators = [curr_controller['id'] for curr_controller in document_to_change['creators']]
-
-    user = User(connection=connection, cursor=cursor)
-    all_users = user.get_all_users()
-
-    for curr_user in all_users:
-        if curr_user['id'] in document_controllers:
-            curr_user['is_in_controllers'] = True
-        else:
-            curr_user['is_in_controllers'] = False
-
-        if curr_user['id'] in document_creators:
-            curr_user['is_in_creators'] = True
-        else:
-            curr_user['is_in_creators'] = False
-
-    context = {
-        'all_users': all_users,
-        'document': document_to_change
-    }
-
     if request.method == 'POST':
+        document = Document(connection=connection, cursor=cursor)
+
+        document_to_change = document.get_document_by_id(document_id=document_idx)
+
         creators_ids = request.args.getlist('creators_ids')  # if there is no such name, returns empty list
         controllers_ids = request.args.getlist('controllers_ids')
 
@@ -115,22 +86,18 @@ def change_document(document_idx: int):
         context = {'idx': document_to_change['id']}
         return make_response(jsonify(context), StatusCodes.Created)
 
-    return make_response(jsonify(context), StatusCodes.OK)
+    return Response(status=StatusCodes.BadRequest)
 
 
 @change_blue_print.route('/change_factory/<int:factory_idx>', methods=("GET", "POST"))
 def change_factory(factory_idx: int):
     """View for factory changing"""
 
-    factory = Factory(connection=connection, cursor=cursor)
-
-    factory_to_change = factory.get_factory_by_id(factory_id=factory_idx)
-
-    context = {
-        'factory': factory_to_change,
-    }
-
     if request.method == 'POST':
+        factory = Factory(connection=connection, cursor=cursor)
+
+        factory_to_change = factory.get_factory_by_id(factory_id=factory_idx)
+
         add_new_factory_schema = AddNewFactory()
         errors = add_new_factory_schema.validate(data=request.args)
 
@@ -151,49 +118,12 @@ def change_factory(factory_idx: int):
         context = {'idx': factory_to_change['id']}
         return make_response(jsonify(context), StatusCodes.Created)
 
-    return make_response(jsonify(context), StatusCodes.OK)
+    return Response(status=StatusCodes.BadRequest)
 
 
 @change_blue_print.route('/change_task/<int:task_idx>', methods=("GET", "POST"))
 def change_task(task_idx: int):
     """View for task changing"""
-
-    task = Task(connection=connection, cursor=cursor)
-    task_to_change = task.get_task_by_id(task_id=task_idx)
-
-    document = Document(connection=connection, cursor=cursor)
-    all_documents = document.get_all_documents()
-
-    user = User(connection=connection, cursor=cursor)
-    all_users = user.get_all_users()
-
-    factory = Factory(connection=connection, cursor=cursor)
-    all_factories = factory.get_all_factories()
-
-    for curr_user in all_users:
-        if curr_user['id'] == task_to_change['executor_id']:
-            curr_user['is_in_users'] = True
-        else:
-            curr_user['is_in_users'] = False
-
-    for curr_document in all_documents:
-        if curr_document['id'] == task_to_change['document_id']:
-            curr_document['is_in_documents'] = True
-        else:
-            curr_document['is_in_documents'] = False
-
-    for curr_factory in all_factories:
-        if curr_factory['id'] == task_to_change['factory_id']:
-            curr_factory['is_in_factories'] = True
-        else:
-            curr_factory['is_in_factories'] = False
-
-    context = {
-        'task': task_to_change,
-        'all_documents': all_documents,
-        'all_users': all_users,
-        'all_factories': all_factories
-    }
 
     if request.method == 'POST':
 
@@ -217,20 +147,12 @@ def change_task(task_idx: int):
 
         return Response(status=StatusCodes.Created)
 
-    return make_response(jsonify(context), StatusCodes.OK)
+    return Response(status=StatusCodes.BadRequest)
 
 
 @change_blue_print.route('/change_user/<int:user_idx>', methods=("GET", "POST"))
 def change_user(user_idx: int):
     """View for user changing"""
-
-    user = User(connection=connection, cursor=cursor)
-
-    user_to_change = user.get_user_by_id(user_id=user_idx)
-
-    context = {
-        'user': user_to_change,
-    }
 
     if request.method == 'POST':
         add_new_user_schema = AddNewUser()
@@ -256,5 +178,5 @@ def change_user(user_idx: int):
 
         return Response(status=StatusCodes.Created)
 
-    return make_response(jsonify(context), StatusCodes.OK)
+    return Response(status=StatusCodes.BadRequest)
 

@@ -4,9 +4,7 @@ import os
 from datetime import datetime
 
 from flask import (Blueprint, Response,
-                   render_template,
                    request, abort,
-                   redirect, url_for,
                    jsonify, make_response)
 
 try:
@@ -76,13 +74,6 @@ def add_user():
 def add_document():
     """View for adding new documents (form)"""
 
-    user = User(connection=connection, cursor=cursor)
-    all_users = user.get_all_users()
-
-    context = {
-        'all_users': all_users
-    }
-
     if request.method == 'POST':
         creators_ids = request.args.getlist('creators_ids')  # if there is no such name, returns empty list
         controllers_ids = request.args.getlist('controllers_ids')
@@ -120,7 +111,7 @@ def add_document():
 
         return Response(status=StatusCodes.Created)
 
-    return make_response(jsonify(context), StatusCodes.OK)
+    return Response(status=StatusCodes.BadRequest)
 
 
 @add_blue_print.route('/add_factory', methods=("GET", "POST"))
@@ -154,26 +145,6 @@ def add_factory():
 def add_task(document_idx: int):
     """View for adding new tasks (form)"""
 
-    document = Document(connection=connection, cursor=cursor)
-
-    if document_idx:
-        all_documents = document.get_document_by_id(document_id=document_idx)
-        all_documents = [all_documents]
-    else:
-        all_documents = document.get_all_documents()
-
-    user = User(connection=connection, cursor=cursor)
-    all_users = user.get_all_users()
-
-    factory = Factory(connection=connection, cursor=cursor)
-    all_factories = factory.get_all_factories()
-
-    context = {
-        'all_documents': all_documents,
-        'all_users': all_users,
-        'all_factories': all_factories
-    }
-
     if request.method == 'POST':
 
         add_new_task_schema = AddNewTask()
@@ -200,4 +171,5 @@ def add_task(document_idx: int):
         else:
             return Response(status=StatusCodes.Created)
 
-    return make_response(jsonify(context), StatusCodes.OK)
+    return Response(status=StatusCodes.BadRequest)
+

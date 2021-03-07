@@ -3,11 +3,9 @@
 import os
 from datetime import datetime
 
-from flask import (Blueprint, Response,
-                   render_template, jsonify,
+from flask import (Blueprint, jsonify,
                    make_response,
-                   request, abort,
-                   redirect, url_for)
+                   request)
 
 try:
     # Used for server setup using command line

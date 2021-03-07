@@ -2,11 +2,8 @@
 
 import os
 
-from flask import (Blueprint, Response,
-                   render_template, jsonify,
-                   make_response,
-                   request, abort,
-                   redirect, url_for)
+from flask import (Blueprint, jsonify,
+                   make_response)
 
 try:
     # Used for server setup using command line

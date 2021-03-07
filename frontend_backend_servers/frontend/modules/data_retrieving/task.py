@@ -23,7 +23,7 @@ class Task:
 
         self.root_uri = root_uri
 
-    def get_tasks(self):
+    def get_all_tasks(self):
         """
 
         :return:

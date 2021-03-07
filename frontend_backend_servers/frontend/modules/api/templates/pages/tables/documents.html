@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}All documents{% endblock %}</h1>
+{% endblock %}
+
+
+{% block content %}
+
+<div class="user-box">
+    For last <input type="number" min="1" id="search_form_input"> days from registration
+</div>
+
+<div id="table-to-update">
+    {% include 'pages/tables/documents_table.html' %}
+</div>
+
+<a href="{{ url_for('show_documentation.home') }}" class="button-link">Go Home</a>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+<script>
+
+    $("#search_form_input").keyup(function(){
+        console.log('Hey there!')
+
+        var last_n_days = $(this).val();
+
+        $.ajax({
+
+            url: '{{ url_for('show_documentation.update_table') }}',
+            type: 'get',
+            data: {last_n_days: last_n_days},
+
+            success: function(response) {
+                $('#table-to-update').html(response)
+            },
+            error: function(error) {
+
+            }
+
+        });
+
+    });
+
+</script>
+
+{% endblock %}

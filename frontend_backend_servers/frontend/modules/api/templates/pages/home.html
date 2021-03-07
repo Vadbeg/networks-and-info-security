@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+
+{% block header %}
+  <h1>{% block title %}Home{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+
+
+<a href="{{ url_for('show_documentation.show_users') }}" class="button-link">Users</a>
+<a href="{{ url_for('add_documentation.add_user') }}" class="button-link">Add user</a>
+<a href="{{ url_for('show_documentation.show_documents') }}" class="button-link">Documents</a>
+<a href="{{ url_for('add_documentation.add_document') }}" class="button-link">Add document</a>
+<a href="{{ url_for('show_documentation.show_tasks') }}" class="button-link">Tasks</a>
+<a href="{{ url_for('add_documentation.add_task') }}" class="button-link">Add task</a>
+<a href="{{ url_for('show_documentation.show_factories') }}" class="button-link">Factories</a>
+<a href="{{ url_for('add_documentation.add_factory') }}" class="button-link">Add factory</a>
+
+{% endblock %}

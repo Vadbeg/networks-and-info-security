@@ -44,6 +44,8 @@ get_blue_print = Blueprint('get_documentation', __name__, url_prefix=os.environ[
 def get_users():
     """View with users table"""
 
+    print(f'WTF')
+
     user = User(connection=connection, cursor=cursor)
 
     all_users = user.get_all_users()

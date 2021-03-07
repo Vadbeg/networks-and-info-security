@@ -23,7 +23,7 @@ class Document:
 
         self.root_uri = root_uri
 
-    def get_documents(self):
+    def get_all_documents(self):
         """
 
         :return:

@@ -1,7 +1,7 @@
 """Server starting script"""
 
 import sys
-sys.path.append('/home/vadbeg/Projects/University/networks-and-info-security')
+sys.path.append('/home/vadbeg/Projects/University/networks-and-info-security/frontend_backend_servers/backend')
 
 import argparse
 from modules.api import create_app
@@ -23,6 +23,8 @@ if __name__ == '__main__':
 
     app_host = args.app_host
     app_port = args.app_port
+
+    print(sys.path)
 
     app = create_app()
     app.run(host=app_host, port=app_port)

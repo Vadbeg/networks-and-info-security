@@ -24,7 +24,7 @@ class Factory:
 
         self.root_uri = root_uri
 
-    def get_factories(self):
+    def get_all_factories(self):
         """
 
         :return:

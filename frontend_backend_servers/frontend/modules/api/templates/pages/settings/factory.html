@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+
+{% block header %}
+  <h1>{% block title %}One factory{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+
+<div>
+    <table class="styled-table">
+        <tbody>
+            <tr>
+                <td>id</td>
+                <td>{{ factory_description.id }}</td>
+            </tr>
+
+            <tr>
+                <td>factory_name</td>
+                <td>{{ factory_description.factory_name }}</td>
+            </tr>
+
+            <tr>
+                <td>size</td>
+                <td>{{ factory_description.size }}</td>
+            </tr>
+
+            <tr>
+                <td>city</td>
+                <td>{{ factory_description.city }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ url_for('change_documentation.change_factory', factory_idx=factory_description.id) }}" class="button-link">Change factory</a>
+    <a href="{{ url_for('delete_documentation.delete_factory', factory_idx=factory_description.id) }}" class="button-link">Delete factory</a>
+    <a href="{{ url_for('show_documentation.home') }}" class="button-link">Go Home</a>
+
+</div>
+
+
+{% endblock %}

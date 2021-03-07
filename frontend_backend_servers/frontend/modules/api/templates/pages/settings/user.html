@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+
+{% block header %}
+  <h1>{% block title %}One user{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+
+<div>
+    <table class="styled-table">
+        <tbody>
+            <tr>
+                <td>id</td>
+                <td>{{ user_description.id }}</td>
+            </tr>
+
+            <tr>
+                <td>name</td>
+                <td>
+                    {{ user_description.first_name }} {{ user_description.second_name }}
+                </td>
+            </tr>
+
+            <tr>
+                <td>is_internal</td>
+                <td>{{ user_description.is_internal }}</td>
+            </tr>
+
+            <tr>
+                <td>position</td>
+                <td>{{ user_description.position }}</td>
+            </tr>
+
+            <tr>
+                <td>email</td>
+                <td>{{ user_description.email }}</td>
+            </tr>
+
+            <tr>
+                <td>phone_number</td>
+                <td>{{ user_description.phone_number }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ url_for('change_documentation.change_user', user_idx=user_description.id) }}" class="button-link">Change user</a>
+    <a href="{{ url_for('delete_documentation.delete_user', user_idx=user_description.id) }}" class="button-link">Delete user</a>
+    <a href="{{ url_for('show_documentation.home') }}" class="button-link">Go Home</a>
+
+</div>
+
+
+{% endblock %}

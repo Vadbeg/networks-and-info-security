@@ -22,14 +22,21 @@ class User:
 
         self.root_uri = root_uri
 
-    def get_users(self):
+    def get_all_users(self):
         """
 
         :return:
         """
+        print(f'WTF')
+
         get_users_url = urllib.parse.urljoin(self.root_uri, self.__GET_USERS_REL_PATH)
 
+        print(get_users_url)
+
         response = requests.get(get_users_url)
+
+        print(response)
+
         result = response.json()
 
         result = result['all_users']

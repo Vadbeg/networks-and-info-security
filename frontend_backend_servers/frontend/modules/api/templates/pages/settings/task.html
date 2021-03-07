@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+
+{% block header %}
+  <h1>{% block title %}One user{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+
+<div>
+    <table class="styled-table">
+        <tbody>
+            <tr>
+                <td>id</td>
+                <td>{{ task_description.id }}</td>
+            </tr>
+
+            <tr>
+                <td>task_name</td>
+                <td>
+                    {{ task_description.task_name }}
+                </td>
+            </tr>
+
+            <tr>
+                <td>executor_id</td>
+                <td>{{ task_description.executor_id }}</td>
+            </tr>
+
+            <tr>
+                <td>document_id</td>
+                <td>{{ task_description.document_id }}</td>
+            </tr>
+
+            <tr>
+                <td>factory_id</td>
+                <td>{{ task_description.factory_id }}</td>
+            </tr>
+
+        </tbody>
+    </table>
+
+    <a href="{{ url_for('change_documentation.change_task', task_idx=task_description.id) }}" class="button-link">Change task</a>
+    <a href="{{ url_for('delete_documentation.delete_task', task_idx=task_description.id) }}" class="button-link">Delete task</a>
+    <a href="{{ url_for('show_documentation.home') }}" class="button-link">Go Home</a>
+
+</div>
+
+
+{% endblock %}

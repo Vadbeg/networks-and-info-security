@@ -1,6 +1,7 @@
 """Module with routes for Flask application"""
 
 import os
+from datetime import datetime
 
 from flask import (Blueprint, Response,
                    render_template, jsonify,
@@ -109,6 +110,12 @@ def get_one_document(idx: int):
 
     task = Task(connection=connection, cursor=cursor)
     all_document_tasks = task.get_task_by_document_id(document_id=idx)
+
+    if isinstance(document_description['date_of_creation'], datetime):
+        document_description['date_of_creation'] = str(document_description['date_of_creation'].date())
+
+    if isinstance(document_description['date_of_registration'], datetime):
+        document_description['date_of_registration'] = str(document_description['date_of_registration'].date())
 
     context = {
         'document_description': document_description,

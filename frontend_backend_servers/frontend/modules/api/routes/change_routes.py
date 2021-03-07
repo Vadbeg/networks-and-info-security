@@ -38,12 +38,15 @@ def change_document(document_idx: int):
 
     document = Document(root_uri=os.environ['ROOT_BACKEND_URI'])
 
-    document_to_change = document.get_one_document(document_id=document_idx)
+    document_to_change, all_document_tasks = document.get_one_document(document_id=document_idx)
 
-    document_to_change['date_of_creation'] = datetime.strftime(document_to_change['date_of_creation'],
-                                                               '%Y-%m-%d')
-    document_to_change['date_of_registration'] = datetime.strftime(document_to_change['date_of_registration'],
-                                                                   '%Y-%m-%d')
+    document_to_change['date_of_creation'] = datetime.strptime(document_to_change['date_of_creation'],
+                                                               '%Y-%m-%d').date()
+    document_to_change['date_of_creation'] = str(document_to_change['date_of_creation'])
+
+    document_to_change['date_of_registration'] = datetime.strptime(document_to_change['date_of_registration'],
+                                                                   '%Y-%m-%d').date()
+    document_to_change['date_of_registration'] = str(document_to_change['date_of_registration'])
 
     document_controllers = [curr_controller['id'] for curr_controller in document_to_change['controllers']]
     document_creators = [curr_controller['id'] for curr_controller in document_to_change['creators']]

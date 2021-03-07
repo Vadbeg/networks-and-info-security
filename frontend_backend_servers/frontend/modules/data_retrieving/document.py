@@ -40,7 +40,7 @@ class Document:
 
         return all_documents
 
-    def get_one_document(self, document_id: int) -> Tuple[List[Dict], Dict]:
+    def get_one_document(self, document_id: int) -> Tuple[Dict, List[Dict]]:
         """
         Gets info for on document and all task for it from backend server
 

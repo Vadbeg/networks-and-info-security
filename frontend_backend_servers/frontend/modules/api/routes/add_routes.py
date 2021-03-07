@@ -147,10 +147,13 @@ def add_task(document_idx: int):
     document = Document(root_uri=os.environ['ROOT_BACKEND_URI'])
 
     if document_idx:
-        all_documents = document.get_one_document(document_id=document_idx)
+        all_documents, all_document_tasks = document.get_one_document(document_id=document_idx)
         all_documents = [all_documents]
     else:
         all_documents = document.get_all_documents()
+
+    from pprint import pprint
+    pprint(all_documents)
 
     user = User(root_uri=os.environ['ROOT_BACKEND_URI'])
     all_users = user.get_all_users()

@@ -1,4 +1,4 @@
-"""Module with interactions for task table"""
+"""Module with interactions for task table threw backend API"""
 
 import requests
 import urllib.parse

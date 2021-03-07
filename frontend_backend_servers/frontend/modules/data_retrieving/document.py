@@ -1,4 +1,4 @@
-"""Module with interactions for document table threw backend"""
+"""Module with interactions for document table threw backend API"""
 
 import requests
 import urllib.parse

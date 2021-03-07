@@ -1,4 +1,4 @@
-"""Module with interactions for user table"""
+"""Module with interactions for user table threw backend API"""
 
 import requests
 import urllib.parse
@@ -22,31 +22,28 @@ class User:
 
         self.root_uri = root_uri
 
-    def get_all_users(self):
+    def get_all_users(self) -> List[Dict]:
         """
+        Gets all users from database threw backend API
 
-        :return:
+        :return: list of users info
         """
-        print(f'WTF')
 
         get_users_url = urllib.parse.urljoin(self.root_uri, self.__GET_USERS_REL_PATH)
 
-        print(get_users_url)
-
         response = requests.get(get_users_url)
-
-        print(response)
-
         result = response.json()
 
         result = result['all_users']
 
         return result
 
-    def get_one_user(self, user_id: int):
+    def get_one_user(self, user_id: int) -> Dict:
         """
+        Gets one user from database threw backend API
 
-        :return:
+        :param user_id: index of user
+        :return: user description
         """
 
         get_one_user_url = urllib.parse.urljoin(self.root_uri, self.__GET_ONE_USER_REL_PATH)
@@ -57,20 +54,23 @@ class User:
         response = requests.get(get_one_user_url)
         result = response.json()
 
-        return result
+        user_description = result['user_description']
+
+        return user_description
 
     def add_user(self, first_name: str, second_name: str,
                  is_internal: bool, position: int,
-                 email: str, phone_number: str):
+                 email: str, phone_number: str) -> int:
         """
+        Adds user to database threw backend API
 
-        :param first_name:
-        :param second_name:
-        :param is_internal:
-        :param position:
-        :param email:
-        :param phone_number:
-        :return:
+        :param first_name: name of new user
+        :param second_name: second name of new user
+        :param is_internal: is user is internal True, else False
+        :param position: position of user
+        :param email: email of user
+        :param phone_number: phone number of user
+        :return: status code
         """
 
         add_user_url = urllib.parse.urljoin(self.root_uri, self.__ADD_USER_REL_PATH)
@@ -91,17 +91,18 @@ class User:
 
     def change_user(self, user_id: int, first_name: str, second_name: str,
                     is_internal: bool, position: int,
-                    email: str, phone_number: str):
+                    email: str, phone_number: str) -> int:
         """
+        Changes user in database threw backend API
 
-        :param user_id:
-        :param first_name:
-        :param second_name:
-        :param is_internal:
-        :param position:
-        :param email:
-        :param phone_number:
-        :return:
+        :param user_id: index of user
+        :param first_name: name of new user
+        :param second_name: second name of new user
+        :param is_internal: is user is internal True, else False
+        :param position: position of user
+        :param email: email of user
+        :param phone_number: phone number of user
+        :return: status code
         """
 
         change_one_user_url = urllib.parse.urljoin(self.root_uri, self.__CHANGE_USER_REL_PATH)
@@ -123,11 +124,14 @@ class User:
 
         return response.status_code
 
-    def delete_user(self, user_id: int):
+    def delete_user(self, user_id: int) -> int:
+        """
+        Deletes user from database threw backend API
+
+        :param user_id: index of user to delete
+        :return: status code
         """
 
-        :return:
-        """
         delete_one_user_url = urllib.parse.urljoin(self.root_uri, self.__DELETE_USER_REL_PATH)
         delete_one_user_url = delete_one_user_url + '/'
 

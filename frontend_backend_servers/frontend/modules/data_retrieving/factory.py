@@ -1,4 +1,4 @@
-"""Module with interactions for factory table"""
+"""Module with interactions for factory table threw backend API"""
 
 import requests
 import urllib.parse

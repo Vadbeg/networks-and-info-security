@@ -9,6 +9,7 @@ from typing import List, Dict, Tuple
 class Document:
     __GET_DOCUMENTS_REL_PATH = 'documents'
     __GET_ONE_DOCUMENT_REL_PATH = 'get_one_document'
+    __GET_DOCUMENTS_BY_DATE_REL_PATH = 'get_documents_by_date'
 
     __ADD_DOCUMENT_REL_PATH = 'add_document'
     __CHANGE_DOCUMENT_REL_PATH = 'change_document'
@@ -59,6 +60,20 @@ class Document:
         all_document_tasks = result['all_document_tasks']
 
         return document_description, all_document_tasks
+
+    def get_documents_by_date(self, document_n_days):
+        get_documents_by_date_url = urllib.parse.urljoin(self.root_uri, self.__GET_DOCUMENTS_BY_DATE_REL_PATH)
+
+        params = {
+            'last_n_days': document_n_days
+        }
+
+        response = requests.get(get_documents_by_date_url, params=params)
+        result = response.json()
+
+        all_documents = result['all_documents']
+
+        return all_documents
 
     def add_document(self, document_name: str, document_type: str,
                      creators_ids: List[int], controllers_ids: List[int],

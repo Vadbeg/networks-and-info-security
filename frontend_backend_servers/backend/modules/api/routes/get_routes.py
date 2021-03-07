@@ -160,8 +160,8 @@ def get_one_user(idx: int):
     return make_response(jsonify(context), StatusCodes.OK)
 
 
-@get_blue_print.route('/update_table')
-def get_tables_by_date():
+@get_blue_print.route('/get_documents_by_date')
+def get_documents_by_date():
     """View for table updating (using JQuery and ajax)"""
 
     update_table_schema = UpdateTableSchema()

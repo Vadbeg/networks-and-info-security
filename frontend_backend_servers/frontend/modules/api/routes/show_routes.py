@@ -169,10 +169,7 @@ def update_table():
 
     document = Document(root_uri=os.environ['ROOT_BACKEND_URI'])
 
-    if last_n_days == 0:
-        documents_by_date = document.get_all_documents()
-    else:
-        documents_by_date = document.get_document_by_date(document_n_days=last_n_days)
+    documents_by_date = document.get_documents_by_date(document_n_days=last_n_days)
 
     context = {
         'all_documents': documents_by_date

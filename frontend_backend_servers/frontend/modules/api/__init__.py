@@ -14,6 +14,7 @@ def create_app(test_config=None) -> Flask:
     app = Flask(__name__, instance_relative_config=True)
 
     app.config.from_mapping(SECRET_KEY='dev')
+    # app.config['Access-Control-Allow-Origin'] = '*'
 
     if test_config:
         app.config.update(test_config)

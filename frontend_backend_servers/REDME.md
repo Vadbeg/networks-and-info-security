@@ -19,7 +19,7 @@ You can start app using `docker-compose`:
 2. Up `docker-compose` containers:
 
     ```
-    docker-compose -f docker-compose-front-back.yml build
+    docker-compose -f docker-compose-front-back.yml up
     ```
 
 Now you have access to the app:

@@ -1,13 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import DateShower from "./App";
-import Form from "./Form";
+import { Router } from 'react-router-dom';
+import { createBrowserHistory } from 'history';
 
-function Text() {
-    return <h1>Some bullshit!</h1>
-}
+import App from "./App";
 
+import './static/style.css';
 
-ReactDOM.render(<DateShower color='red'/>, document.getElementById('root'));
-ReactDOM.render(<Text />, document.getElementById('value'));
-ReactDOM.render(<Form />, document.getElementById('custom-form'));
+const history = createBrowserHistory();
+
+ReactDOM.render(
+    <Router history={history}>
+        <App />
+    </Router>,
+    document.getElementById('root')
+);

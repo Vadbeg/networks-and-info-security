@@ -14,14 +14,14 @@ services:
       - DATABASE_PASSWORD=password
       - DATABASE_NAME=database
       - API_PREFIX=/api/v_0
-  frontend-server:
-    build: ./frontend
-    ports:
-      - "8000:8000"
-    depends_on:
-      - backend-server
-    environment:
-      - ROOT_BACKEND_URI=http://backend-server:9000/api/v_0/
+#  frontend-server:
+#    build: ./frontend
+#    ports:
+#      - "8000:8000"
+#    depends_on:
+#      - backend-server
+#    environment:
+#      - ROOT_BACKEND_URI=http://backend-server:9000/api/v_0/
   postgres_db:
     image: postgres:10.5
     ports:

@@ -1,6 +1,7 @@
 """Module for starting app"""
 
 from flask import Flask
+from flask_cors import CORS
 
 
 def create_app(test_config=None) -> Flask:
@@ -12,6 +13,7 @@ def create_app(test_config=None) -> Flask:
     """
 
     app = Flask(__name__, instance_relative_config=True)
+    CORS(app)
 
     app.config.from_mapping(SECRET_KEY='dev')
 

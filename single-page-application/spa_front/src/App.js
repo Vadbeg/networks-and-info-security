@@ -1,35 +1,46 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {Redirect, Route, Switch, withRouter} from "react-router-dom";
 
-class DateShower extends React.Component {
-    constructor(props) {
-        super(props);
+import Home from "./templates/pages/home";
+import DocumentsTable from "./templates/pages/tables/documentsTable";
 
-        this.state = {'country': 'Belarus'}
-    }
+// class App extends React.Component {
+//     // constructor(props) {
+//     //     super(props);
+//     // }
+//
+//     render() {
+//         const { history } = this.props;
+//
+//         let myfirstelement = (
+//             <div>
+//                 <Switch>
+//                     <Route history={history} path='/home' component={Home} />
+//                     <Route history={history} path='/documentsTable' component={DocumentsTable} />
+//                     <Redirect from='/' to='/home'/>
+//                 </Switch>
+//             </div>
+//         );
+//
+//         return myfirstelement
+//     }
+// }
 
-    changeCountry = () => {
-        this.setState({country: 'US'});
-    }
-
+class App extends React.Component {
     render() {
-        var today = new Date();
-        const myfirstelement = (
-        <div>
-            <h1>Hello React, motherfucker {String(today.getDate())}!</h1>
-            <h2>{this.props.color}</h2>
-            <h2>Your country is {this.state.country}</h2>
+        const { history } = this.props
 
-            <button type='button' onClick={this.changeCountry}>
-                Change country
-            </button>
-        </div>
+        return (
+            <div className="App">
+                <Switch>
+                    <Route history={history} path='/documentsTable' component={DocumentsTable} />
+                    <Route history={history} path='/home' component={Home} />
+                    <Redirect from='/' to='/home'/>
+                </Switch>
+            </div>
         );
-
-        return myfirstelement
     }
 }
 
-
-
-export default DateShower;
+export default withRouter(App);

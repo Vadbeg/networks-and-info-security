@@ -30,12 +30,11 @@ class Document{
         let response = Document.makeGetRequest(get_all_documents_url);
 
         let all_documents = response['all_documents']
-        let creators = response['creators']
 
         console.log('all_documents')
         console.log(all_documents)
 
-        return [all_documents, creators];
+        return all_documents;
     }
 
     get_one_document(document_id) {

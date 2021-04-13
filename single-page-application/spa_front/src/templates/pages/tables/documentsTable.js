@@ -1,5 +1,6 @@
 import React from "react";
 import Document from "../../../data_retrieving/document";
+import {Link} from "react-router-dom";
 
 
 export default class DocumentsTable extends React.Component {
@@ -16,8 +17,7 @@ export default class DocumentsTable extends React.Component {
     }
 
     componentDidMount() {
-        let documents_info = this.document.get_all_documents();
-        let all_documents = documents_info[0];
+        let all_documents = this.document.get_all_documents();
 
         this.setState({
             'all_documents': all_documents
@@ -29,45 +29,51 @@ export default class DocumentsTable extends React.Component {
 
         console.log(all_documents)
 
-        // let documents_info = this.document.get_all_documents();
-
-        // let all_documents = documents_info[0];
-
         let documentRows = [];
 
-        for (let i=0; i < all_documents.length; i++){
-            let curr_document = all_documents[i]
+        if (all_documents !== undefined) {
+            for (let i=0; i < all_documents.length; i++){
+                let curr_document = all_documents[i]
 
-            documentRows.push(
-                <tr>
-                    <td>{ curr_document['id'] }</td>
-                    <td>
-                        <a>
-                            { curr_document['document_name'] }
-                        </a>
-                    </td>
-                    <td>{ curr_document['document_type'] }</td>
-                    <td>{ curr_document['date_of_creation'] }</td>
-                    <td>{ curr_document['date_of_registration'] }</td>
-                </tr>
-            )
+                documentRows.push(
+                    <tr>
+                        <td>{ curr_document['id'] }</td>
+                        <td>
+                            <a>
+                                { curr_document['document_name'] }
+                            </a>
+                        </td>
+                        <td>{ curr_document['document_type'] }</td>
+                        <td>{ curr_document['date_of_creation'] }</td>
+                        <td>{ curr_document['date_of_registration'] }</td>
+                    </tr>
+                )
+            }
         }
 
         let documentsTable = (
-            <table className="styled-table">
-                <thead>
-                <tr>
-                    <th>id</th>
-                    <th>document_name</th>
-                    <th>document_type</th>
-                    <th>date_of_creation</th>
-                    <th>date_of_registration</th>
-                </tr>
-                </thead>
-                <tbody>
-                    {documentRows}
-                </tbody>
-            </table>
+            <div>
+                <div id="table-to-update">
+                    <table className="styled-table">
+                        <thead>
+                        <tr>
+                            <th>id</th>
+                            <th>document_name</th>
+                            <th>document_type</th>
+                            <th>date_of_creation</th>
+                            <th>date_of_registration</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {documentRows}
+                        </tbody>
+                    </table>
+                </div>
+
+                <Link className='button-link' to={'/home'}>
+                    Go Home
+                </Link>
+            </div>
         );
 
         console.log('Rendered table')

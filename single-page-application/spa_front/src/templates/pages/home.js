@@ -6,6 +6,9 @@ import {
 
 const SECTIONS = [
     {title: 'Documents', href: '/documentsTable'},
+    {title: 'Factories', href: '/factoriesTable'},
+    {title: 'Tasks', href: '/tasksTable'},
+    {title: 'Users', href: '/usersTable'},
 ]
 
 
@@ -33,17 +36,13 @@ class Home extends React.Component {
             )
         }
 
-        let myfirstelement = (
+        let links_element = (
             <div>
-                <Link className='button-link' to={'/documentsTable'}>
-                    Documents
-                </Link>
+                {all_links}
             </div>
         );
 
-        console.log('WTF')
-
-        return myfirstelement
+        return links_element
     }
 }
 

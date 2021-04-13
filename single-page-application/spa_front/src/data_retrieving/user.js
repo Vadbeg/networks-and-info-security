@@ -44,6 +44,29 @@ class User{
         return response;
     }
 
+    add_one_user(
+        first_name, second_name,
+        is_internal, position,
+        email, phone_number) {
+
+        let add_one_user_url =  this.root_uri + this.__ADD_USER_REL_PATH;
+
+        let params = {
+            'first_name': first_name,
+            'second_name': second_name,
+            'is_internal': is_internal,
+
+            'position': position,
+            'email': email,
+            'phone_number': phone_number
+        }
+
+        console.log('Params', params)
+
+        User.makePostRequest(add_one_user_url, params)
+
+    }
+
     static makeGetRequest(url, data = null) {
         var real_response = null;
 
@@ -56,6 +79,32 @@ class User{
             mimeType: "multipart/form-data",
             contentType: false,
             async: false,
+            data: data,
+            success: function (data) {
+                real_response = data;
+            },
+            error: function (error) {
+                console.log('Error', error);
+            }
+        };
+
+        $.ajax(settings);
+
+        return real_response;
+    }
+
+
+    static makePostRequest(url, data) {
+        var real_response = null;
+
+        console.log(data)
+
+        var settings = {
+            url: url,
+            method: "POST",
+            dataType: 'json',
+            async: false,
+            traditional: true,
             data: data,
             success: function (data) {
                 real_response = data;

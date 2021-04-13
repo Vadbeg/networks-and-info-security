@@ -47,6 +47,22 @@ class Document{
         return response;
     }
 
+    add_document(document_name, document_type, creators_ids,
+                 controllers_ids, date_of_creation, date_of_registration) {
+        let add_one_document_url =  this.root_uri + this.__ADD_DOCUMENT_REL_PATH;
+
+        let params = {
+            'document_name': document_name,
+            'document_type': document_type,
+            'creators_ids': creators_ids,
+            'controllers_ids': controllers_ids,
+            'date_of_creation': date_of_creation,
+            'date_of_registration': date_of_registration
+        }
+
+        Document.makePostRequest(add_one_document_url, params)
+    }
+
     static makeGetRequest(url, data = null) {
         var real_response = null;
 
@@ -59,6 +75,31 @@ class Document{
             mimeType: "multipart/form-data",
             contentType: false,
             async: false,
+            data: data,
+            success: function (data) {
+                real_response = data;
+            },
+            error: function (error) {
+                console.log('Error', error);
+            }
+        };
+
+        $.ajax(settings);
+
+        return real_response;
+    }
+
+    static makePostRequest(url, data) {
+        var real_response = null;
+
+        console.log(data)
+
+        var settings = {
+            url: url,
+            method: "POST",
+            dataType: 'json',
+            async: false,
+            traditional: true,
             data: data,
             success: function (data) {
                 real_response = data;

@@ -9,6 +9,8 @@ const SECTIONS = [
     {title: 'Factories', href: '/factoriesTable'},
     {title: 'Tasks', href: '/tasksTable'},
     {title: 'Users', href: '/usersTable'},
+    {title: 'Add document', href: '/addDocument'},
+    {title: 'Add user', href: '/addUser'},
 ]
 
 

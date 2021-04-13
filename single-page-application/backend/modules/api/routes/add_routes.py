@@ -47,12 +47,12 @@ def add_user():
     if request.method == 'POST':
         add_new_user_schema = AddNewUser()
 
-        errors = add_new_user_schema.validate(data=request.args)
+        errors = add_new_user_schema.validate(data=request.form)
 
         if errors:
             abort(StatusCodes.BadRequest, str(errors))
 
-        args = add_new_user_schema.dump(request.args)
+        args = add_new_user_schema.dump(request.form)
 
         user = User(connection=connection, cursor=cursor)
         user.add_user(
@@ -75,10 +75,10 @@ def add_document():
     """View for adding new documents (form)"""
 
     if request.method == 'POST':
-        creators_ids = request.args.getlist('creators_ids')  # if there is no such name, returns empty list
-        controllers_ids = request.args.getlist('controllers_ids')
+        creators_ids = request.form.getlist('creators_ids')  # if there is no such name, returns empty list
+        controllers_ids = request.form.getlist('controllers_ids')
 
-        request_args = dict(request.args)
+        request_args = dict(request.form)
 
         request_args.pop('creators_ids')  # there is no need in it now
         request_args.pop('controllers_ids')

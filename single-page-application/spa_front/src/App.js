@@ -8,6 +8,9 @@ import FactoriesTable from "./templates/pages/tables/factoriesTable";
 import TasksTable from "./templates/pages/tables/tasksTable";
 import UsersTable from "./templates/pages/tables/usersTable";
 
+import AddDocument from "./templates/pages/inputs/addDocument";
+import AddUser from "./templates/pages/inputs/addUser";
+
 class App extends React.Component {
     constructor(props) {
         super(props);
@@ -24,6 +27,10 @@ class App extends React.Component {
                     <Route history={history} path='/factoriesTable' component={FactoriesTable} />
                     <Route history={history} path='/tasksTable' component={TasksTable} />
                     <Route history={history} path='/usersTable' component={UsersTable} />
+
+                    <Route history={history} path='/addDocument' component={AddDocument} />
+                    <Route history={history} path='/addUser' component={AddUser} />
+
                     <Redirect from='/' to='/home'/>
                 </Switch>
             </div>

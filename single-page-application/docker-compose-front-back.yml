@@ -1,19 +1,19 @@
 version: "3.3"
 
 services:
-  backend-server:
-    build: ./backend
-    ports:
-    - "9000:9000"
-    depends_on:
-      - postgres_db
-    environment:
-      - DATABASE_HOST=postgres_db
-      - DATABASE_PORT=5432
-      - DATABASE_USER=vadbeg
-      - DATABASE_PASSWORD=password
-      - DATABASE_NAME=database
-      - API_PREFIX=/api/v_0
+#  backend-server:
+#    build: ./backend
+#    ports:
+#    - "9000:9000"
+#    depends_on:
+#      - postgres_db
+#    environment:
+#      - DATABASE_HOST=postgres_db
+#      - DATABASE_PORT=5432
+#      - DATABASE_USER=vadbeg
+#      - DATABASE_PASSWORD=password
+#      - DATABASE_NAME=database
+#      - API_PREFIX=/api/v_0
 #  frontend-server:
 #    build: ./frontend
 #    ports:

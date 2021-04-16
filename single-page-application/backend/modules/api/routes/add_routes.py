@@ -121,12 +121,12 @@ def add_factory():
     if request.method == 'POST':
         add_new_factory_schema = AddNewFactory()
 
-        errors = add_new_factory_schema.validate(data=request.args)
+        errors = add_new_factory_schema.validate(data=request.form)
 
         if errors:
             abort(400, str(errors))
 
-        args = add_new_factory_schema.dump(request.args)
+        args = add_new_factory_schema.dump(request.form)
 
         factory = Factory(connection=connection, cursor=cursor)
         factory.add_factory(
@@ -148,12 +148,15 @@ def add_task(document_idx: int):
     if request.method == 'POST':
 
         add_new_task_schema = AddNewTask()
-        errors = add_new_task_schema.validate(data=request.args)
+        errors = add_new_task_schema.validate(data=request.form)
+
+        print(request.form)
+        print(str(errors))
 
         if errors:
             abort(400, str(errors))
 
-        args = add_new_task_schema.dump(request.args)
+        args = add_new_task_schema.dump(request.form)
 
         task = Task(connection=connection, cursor=cursor)
 

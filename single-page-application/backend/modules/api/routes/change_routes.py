@@ -48,10 +48,10 @@ def change_document(document_idx: int):
 
         document_to_change = document.get_document_by_id(document_id=document_idx)
 
-        creators_ids = request.args.getlist('creators_ids')  # if there is no such name, returns empty list
-        controllers_ids = request.args.getlist('controllers_ids')
+        creators_ids = request.form.getlist('creators_ids')  # if there is no such name, returns empty list
+        controllers_ids = request.form.getlist('controllers_ids')
 
-        request_args = dict(request.args)
+        request_args = dict(request.form)
         request_args.pop('creators_ids')  # there is no need in it now
         request_args.pop('controllers_ids')
 
@@ -99,12 +99,12 @@ def change_factory(factory_idx: int):
         factory_to_change = factory.get_factory_by_id(factory_id=factory_idx)
 
         add_new_factory_schema = AddNewFactory()
-        errors = add_new_factory_schema.validate(data=request.args)
+        errors = add_new_factory_schema.validate(data=request.form)
 
         if errors:
             abort(StatusCodes.BadRequest, str(errors))
 
-        args = add_new_factory_schema.dump(request.args)
+        args = add_new_factory_schema.dump(request.form)
 
         factory = Factory(connection=connection, cursor=cursor)
 
@@ -128,12 +128,12 @@ def change_task(task_idx: int):
     if request.method == 'POST':
 
         add_new_task_schema = AddNewTask()
-        errors = add_new_task_schema.validate(data=request.args)
+        errors = add_new_task_schema.validate(data=request.form)
 
         if errors:
             abort(StatusCodes.BadRequest, str(errors))
 
-        args = add_new_task_schema.dump(request.args)
+        args = add_new_task_schema.dump(request.form)
 
         task = Task(connection=connection, cursor=cursor)
 
@@ -157,12 +157,12 @@ def change_user(user_idx: int):
     if request.method == 'POST':
         add_new_user_schema = AddNewUser()
 
-        errors = add_new_user_schema.validate(data=request.args)
+        errors = add_new_user_schema.validate(data=request.form)
 
         if errors:
             abort(StatusCodes.BadRequest, str(errors))
 
-        args = add_new_user_schema.dump(request.args)
+        args = add_new_user_schema.dump(request.form)
 
         user = User(connection=connection, cursor=cursor)
         user.change_user(

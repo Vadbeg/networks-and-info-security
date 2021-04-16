@@ -72,6 +72,8 @@ export default class AddDocument extends React.Component {
             date_of_creation,
             date_of_registration
         )
+
+        this.props.history.push('/documentsTable')
     }
 
     render() {

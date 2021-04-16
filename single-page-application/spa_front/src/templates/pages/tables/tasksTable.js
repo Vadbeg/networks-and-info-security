@@ -33,6 +33,8 @@ export default class TasksTable extends React.Component {
             for (let i=0; i < all_tasks.length; i++){
                 let curr_task = all_tasks[i]
 
+                console.log('task_name', curr_task['task_name'])
+
                 tasksRows.push(
                     <tr>
                         <td>{ curr_task['id'] }</td>

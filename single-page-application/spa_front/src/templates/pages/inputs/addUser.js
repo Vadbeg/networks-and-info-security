@@ -54,6 +54,8 @@ export default class AddUser extends React.Component {
             email,
             phone_number
         )
+
+        this.props.history.push('/usersTable')
     }
 
     render() {

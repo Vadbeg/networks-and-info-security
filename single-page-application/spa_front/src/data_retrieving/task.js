@@ -44,6 +44,22 @@ class Task{
         return response;
     }
 
+    add_task(
+        task_name, executor_id,
+        document_id, factory_id
+    ) {
+        let add_one_task_url =  this.root_uri + this.__ADD_TASK_REL_PATH;
+
+        let params = {
+            'task_name': task_name,
+            'executor_id': executor_id,
+            'document_id': document_id,
+            'factory_id': factory_id,
+        }
+
+        Task.makePostRequest(add_one_task_url, params)
+    }
+
     static makeGetRequest(url, data = null) {
         var real_response = null;
 
@@ -56,6 +72,31 @@ class Task{
             mimeType: "multipart/form-data",
             contentType: false,
             async: false,
+            data: data,
+            success: function (data) {
+                real_response = data;
+            },
+            error: function (error) {
+                console.log('Error', error);
+            }
+        };
+
+        $.ajax(settings);
+
+        return real_response;
+    }
+
+    static makePostRequest(url, data) {
+        var real_response = null;
+
+        console.log(data)
+
+        var settings = {
+            url: url,
+            method: "POST",
+            dataType: 'json',
+            async: false,
+            traditional: true,
             data: data,
             success: function (data) {
                 real_response = data;

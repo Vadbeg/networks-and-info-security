@@ -10,6 +10,8 @@ import UsersTable from "./templates/pages/tables/usersTable";
 
 import AddDocument from "./templates/pages/inputs/addDocument";
 import AddUser from "./templates/pages/inputs/addUser";
+import AddFactory from "./templates/pages/inputs/addFactory";
+import AddTask from "./templates/pages/inputs/addTask";
 
 class App extends React.Component {
     constructor(props) {
@@ -30,6 +32,8 @@ class App extends React.Component {
 
                     <Route history={history} path='/addDocument' component={AddDocument} />
                     <Route history={history} path='/addUser' component={AddUser} />
+                    <Route history={history} path='/addFactory' component={AddFactory} />
+                    <Route history={history} path='/addTask' component={AddTask} />
 
                     <Redirect from='/' to='/home'/>
                 </Switch>

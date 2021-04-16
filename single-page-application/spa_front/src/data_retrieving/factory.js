@@ -46,6 +46,20 @@ class Factory{
         return response;
     }
 
+    add_factory(
+        factory_name, size, city,
+    ) {
+        let add_one_factory_url =  this.root_uri + this.__ADD_FACTORY_REL_PATH;
+
+        let params = {
+            'factory_name': factory_name,
+            'size': size,
+            'city': city,
+        }
+
+        Factory.makePostRequest(add_one_factory_url, params)
+    }
+
     static makeGetRequest(url, data = null) {
         var real_response = null;
 
@@ -71,6 +85,32 @@ class Factory{
 
         return real_response;
     }
+
+    static makePostRequest(url, data) {
+        var real_response = null;
+
+        console.log(data)
+
+        var settings = {
+            url: url,
+            method: "POST",
+            dataType: 'json',
+            async: false,
+            traditional: true,
+            data: data,
+            success: function (data) {
+                real_response = data;
+            },
+            error: function (error) {
+                console.log('Error', error);
+            }
+        };
+
+        $.ajax(settings);
+
+        return real_response;
+    }
+
 
 
 }

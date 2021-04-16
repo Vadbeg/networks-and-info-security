@@ -31,9 +31,6 @@ class Document{
 
         let all_documents = response['all_documents']
 
-        console.log('all_documents')
-        console.log(all_documents)
-
         return all_documents;
     }
 
@@ -44,7 +41,10 @@ class Document{
 
         let response = Document.makeGetRequest(get_one_document_url);
 
-        return response;
+        let document_description = response['document_description']
+        let all_document_tasks = response['all_document_tasks']
+
+        return [document_description, all_document_tasks];
     }
 
     add_document(document_name, document_type, creators_ids,
@@ -62,6 +62,34 @@ class Document{
 
         Document.makePostRequest(add_one_document_url, params)
     }
+
+    delete_document(document_id) {
+        let get_one_document_url =  this.root_uri + this.__DELETE_DOCUMENT_REL_PATH;
+
+        get_one_document_url += '/' + document_id
+
+        let response = Document.makeGetRequest(get_one_document_url);
+    }
+
+    change_document(
+        document_id, document_name, document_type, creators_ids,
+        controllers_ids, date_of_creation, date_of_registration
+    ) {
+        let change_one_document_url =  this.root_uri + this.__CHANGE_DOCUMENT_REL_PATH;
+        change_one_document_url += '/' + document_id
+
+        let params = {
+            'document_name': document_name,
+            'document_type': document_type,
+            'creators_ids': creators_ids,
+            'controllers_ids': controllers_ids,
+            'date_of_creation': date_of_creation,
+            'date_of_registration': date_of_registration
+        }
+
+        let response = Document.makePostRequest(change_one_document_url, params)
+    }
+
 
     static makeGetRequest(url, data = null) {
         var real_response = null;

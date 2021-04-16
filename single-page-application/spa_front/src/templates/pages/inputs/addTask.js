@@ -30,23 +30,36 @@ export default class AddTask extends React.Component {
     }
 
     componentDidMount() {
+        const { document_id } = this.props.match.params;
+
+        console.log('document_id', document_id)
+
+        let all_documents = []
+        if (document_id !== undefined) {
+            let one_document = this.document.get_one_document(document_id);
+            all_documents = [one_document[0]];
+
+            console.log('all_documents', all_documents)
+        } else {
+            all_documents = this.document.get_all_documents();
+        }
+
         let all_factories = this.factory.get_all_factories();
-        let all_documents = this.document.get_all_documents();
         let all_users = this.user.get_all_users();
 
-        let factory_id = null
+        let factory_id_default = null
         if (all_factories !== undefined) {
-            factory_id = all_factories[0]['id']
+            factory_id_default = all_factories[0]['id']
         }
 
-        let document_id = null
+        let document_id_default = null
         if (all_documents !== undefined) {
-            document_id = all_documents[0]['id']
+            document_id_default = all_documents[0]['id']
         }
 
-        let executor_id = null
+        let executor_id_default = null
         if (all_users !== undefined) {
-            executor_id = all_users[0]['id']
+            executor_id_default = all_users[0]['id']
         }
 
         this.setState({
@@ -54,9 +67,9 @@ export default class AddTask extends React.Component {
             'all_documents': all_documents,
             'all_users': all_users,
 
-            'factory_id': factory_id,
-            'document_id': document_id,
-            'executor_id': executor_id,
+            'factory_id': factory_id_default,
+            'document_id': document_id_default,
+            'executor_id': executor_id_default,
         })
     }
 
@@ -85,7 +98,14 @@ export default class AddTask extends React.Component {
             factory_id
         )
 
-        this.props.history.push('/tasksTable')
+        const document_id_query  = this.props.match.params['document_id'];
+
+        if (document_id_query !== undefined) {
+            this.props.history.push(`/settingsDocument/${document_id_query}`)
+        } else {
+            this.props.history.push('/tasksTable')
+        }
+
     }
 
     getOptionsForUsers(all_users) {

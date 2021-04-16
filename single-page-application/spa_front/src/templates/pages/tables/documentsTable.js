@@ -39,9 +39,9 @@ export default class DocumentsTable extends React.Component {
                     <tr>
                         <td>{ curr_document['id'] }</td>
                         <td>
-                            <a>
+                            <Link to={`/settingsDocument/${curr_document.id}`}>
                                 { curr_document['document_name'] }
-                            </a>
+                            </Link>
                         </td>
                         <td>{ curr_document['document_type'] }</td>
                         <td>{ curr_document['date_of_creation'] }</td>

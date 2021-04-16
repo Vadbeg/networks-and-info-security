@@ -13,6 +13,8 @@ import AddUser from "./templates/pages/inputs/addUser";
 import AddFactory from "./templates/pages/inputs/addFactory";
 import AddTask from "./templates/pages/inputs/addTask";
 
+import SettingsDocument from "./templates/pages/settings/settingsDocument";
+
 class App extends React.Component {
     constructor(props) {
         super(props);
@@ -33,7 +35,10 @@ class App extends React.Component {
                     <Route history={history} path='/addDocument' component={AddDocument} />
                     <Route history={history} path='/addUser' component={AddUser} />
                     <Route history={history} path='/addFactory' component={AddFactory} />
-                    <Route history={history} path='/addTask' component={AddTask} />
+                    <Route history={history} exact path='/addTask' component={AddTask} />
+                    <Route history={history} exact path='/addTask/:document_id' component={AddTask} />
+
+                    <Route history={history} path='/settingsDocument/:document_id' component={SettingsDocument} />
 
                     <Redirect from='/' to='/home'/>
                 </Switch>

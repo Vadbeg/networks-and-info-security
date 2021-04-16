@@ -157,9 +157,12 @@ export default class SettingsDocument extends React.Component {
                 <Link className="button-link" to={`/addTask/${document_description['id']}`}>
                     Add new task
                 </Link>
-                {/*<a href="{{ url_for('change_documentation.change_document', document_idx=document_description.id) }}"*/}
-                {/*   className="button-link">Change document</a>*/}
-                <Link className="button-link" onClick={ this.delete_document }>Delete document</Link>
+                <Link className="button-link" to={`/changeDocument/${document_description['id']}`}>
+                    Change document
+                </Link>
+                <Link className="button-link" onClick={ this.delete_document }>
+                    Delete document
+                </Link>
                 <Link className='button-link' to={'/home'}>
                     Go Home
                 </Link>

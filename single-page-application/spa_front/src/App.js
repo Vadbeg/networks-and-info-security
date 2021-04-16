@@ -15,6 +15,8 @@ import AddTask from "./templates/pages/inputs/addTask";
 
 import SettingsDocument from "./templates/pages/settings/settingsDocument";
 
+import ChangeDocument from "./templates/pages/changes/changeDocument";
+
 class App extends React.Component {
     constructor(props) {
         super(props);
@@ -39,6 +41,9 @@ class App extends React.Component {
                     <Route history={history} exact path='/addTask/:document_id' component={AddTask} />
 
                     <Route history={history} path='/settingsDocument/:document_id' component={SettingsDocument} />
+
+                    <Route history={history} path='/changeDocument/:document_id' component={ChangeDocument} />
+
 
                     <Redirect from='/' to='/home'/>
                 </Switch>

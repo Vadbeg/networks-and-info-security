@@ -14,8 +14,10 @@ import AddFactory from "./templates/pages/inputs/addFactory";
 import AddTask from "./templates/pages/inputs/addTask";
 
 import SettingsDocument from "./templates/pages/settings/settingsDocument";
+import SettingsFactory from "./templates/pages/settings/settingsFactory";
 
 import ChangeDocument from "./templates/pages/changes/changeDocument";
+import ChangeFactory from "./templates/pages/changes/changeFactory";
 
 class App extends React.Component {
     constructor(props) {
@@ -41,8 +43,10 @@ class App extends React.Component {
                     <Route history={history} exact path='/addTask/:document_id' component={AddTask} />
 
                     <Route history={history} path='/settingsDocument/:document_id' component={SettingsDocument} />
+                    <Route history={history} path='/settingsFactory/:factory_id' component={SettingsFactory} />
 
                     <Route history={history} path='/changeDocument/:document_id' component={ChangeDocument} />
+                    <Route history={history} path='/changeFactory/:factory_id' component={ChangeFactory} />
 
 
                     <Redirect from='/' to='/home'/>

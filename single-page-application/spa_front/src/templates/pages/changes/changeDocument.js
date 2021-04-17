@@ -87,7 +87,7 @@ export default class ChangeDocument extends React.Component {
         }
     }
 
-    addDocument = (event) => {
+    changeDocument = (event) => {
         event.preventDefault();
 
         const {
@@ -149,7 +149,7 @@ export default class ChangeDocument extends React.Component {
                 <div className="login-box">
                     <h2>Create new document</h2>
 
-                    <form onSubmit={ this.addDocument.bind(this) }>
+                    <form onSubmit={ this.changeDocument.bind(this) }>
 
                         <div className="user-box">
                             <input type="text"

@@ -48,17 +48,17 @@ export default class AddTask extends React.Component {
         let all_users = this.user.get_all_users();
 
         let factory_id_default = null
-        if (all_factories !== undefined) {
+        if ((all_factories !== undefined) && (all_factories[0] !== undefined)) {
             factory_id_default = all_factories[0]['id']
         }
 
         let document_id_default = null
-        if (all_documents !== undefined) {
+        if ((all_documents !== undefined) && (all_documents[0] !== undefined)) {
             document_id_default = all_documents[0]['id']
         }
 
         let executor_id_default = null
-        if (all_users !== undefined) {
+        if ((all_users !== undefined) && (all_users[0] !== undefined)) {
             executor_id_default = all_users[0]['id']
         }
 

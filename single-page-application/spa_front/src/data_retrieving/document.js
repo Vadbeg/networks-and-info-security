@@ -64,11 +64,11 @@ class Document{
     }
 
     delete_document(document_id) {
-        let get_one_document_url =  this.root_uri + this.__DELETE_DOCUMENT_REL_PATH;
+        let delete_one_document_url =  this.root_uri + this.__DELETE_DOCUMENT_REL_PATH;
 
-        get_one_document_url += '/' + document_id
+        delete_one_document_url += '/' + document_id
 
-        let response = Document.makeGetRequest(get_one_document_url);
+        let response = Document.makeGetRequest(delete_one_document_url);
     }
 
     change_document(

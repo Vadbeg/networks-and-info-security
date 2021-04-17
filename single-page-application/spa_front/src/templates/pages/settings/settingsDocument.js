@@ -8,8 +8,6 @@ export default class SettingsDocument extends React.Component {
     constructor(props) {
         super(props);
 
-        console.log('Creating document table')
-
         this.state = {
             'document_description': [],
             'all_document_tasks': []
@@ -19,15 +17,12 @@ export default class SettingsDocument extends React.Component {
     }
 
     componentDidMount() {
-        console.log(this.props)
         const { document_id } = this.props.match.params;
 
         let document_info = this.document.get_one_document(document_id);
 
         let document_description = document_info[0]
         let all_document_tasks = document_info[1]
-
-        console.log(document_info)
 
         this.setState({
             'document_description': document_description,

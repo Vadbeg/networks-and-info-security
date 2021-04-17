@@ -36,9 +36,11 @@ export default class FactoriesTable extends React.Component {
                     <tr>
                         <td>{ curr_factory['id'] }</td>
                         <td>
-                            <a>
-                                { curr_factory['factory_name'] }
-                            </a>
+                            <td>
+                                <Link to={`/settingsFactory/${curr_factory.id}`}>
+                                    { curr_factory['factory_name'] }
+                                </Link>
+                            </td>
                         </td>
                         <td>{ curr_factory['size'] }</td>
                         <td>{ curr_factory['city'] }</td>

@@ -28,9 +28,6 @@ class Factory{
 
         let response = Factory.makeGetRequest(get_all_documents_url);
 
-        console.log('response')
-        console.log(response)
-
         let all_documents = response['all_factories']
 
         return all_documents;
@@ -42,8 +39,9 @@ class Factory{
         get_one_factory_url += '/' + factory_id
 
         let response = Factory.makeGetRequest(get_one_factory_url);
+        let factory_description = response['factory_description'];
 
-        return response;
+        return factory_description;
     }
 
     add_factory(
@@ -59,6 +57,31 @@ class Factory{
 
         Factory.makePostRequest(add_one_factory_url, params)
     }
+
+    delete_factory(factory_id) {
+        let delete_one_factory_url =  this.root_uri + this.__DELETE_FACTORY_REL_PATH;
+
+        delete_one_factory_url += '/' + factory_id
+
+        let response = Factory.makeGetRequest(delete_one_factory_url);
+    }
+
+    change_factory(
+        factory_id, factory_name,
+        size, city
+    ) {
+        let change_one_factory_url =  this.root_uri + this.__CHANGE_FACTORY_REL_PATH;
+        change_one_factory_url += '/' + factory_id
+
+        let params = {
+            'factory_name': factory_name,
+            'size': size,
+            'city': city,
+        }
+
+        let response = Factory.makePostRequest(change_one_factory_url, params)
+    }
+
 
     static makeGetRequest(url, data = null) {
         var real_response = null;

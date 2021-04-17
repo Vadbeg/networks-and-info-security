@@ -37,12 +37,12 @@ export default class UsersTable extends React.Component {
                     <tr>
                         <td>{ curr_user['id'] }</td>
                         <td>
-                            <a>
+                            <Link to={`/settingsUser/${curr_user.id}`}>
                                 { curr_user['first_name'] }
-                            </a>
+                            </Link>
                         </td>
                         <td>{ curr_user['second_name'] }</td>
-                        <td>{ curr_user['is_internal'] }</td>
+                        <td>{ '' + curr_user['is_internal'] }</td>
                         <td>{ curr_user['position'] }</td>
                         <td>{ curr_user['email'] }</td>
                         <td>{ curr_user['phone_number'] }</td>

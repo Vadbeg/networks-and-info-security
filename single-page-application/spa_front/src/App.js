@@ -16,10 +16,12 @@ import AddTask from "./templates/pages/inputs/addTask";
 import SettingsDocument from "./templates/pages/settings/settingsDocument";
 import SettingsFactory from "./templates/pages/settings/settingsFactory";
 import SettingsTask from "./templates/pages/settings/settingsTask";
+import SettingsUser from "./templates/pages/settings/settingsUser";
 
 import ChangeDocument from "./templates/pages/changes/changeDocument";
 import ChangeFactory from "./templates/pages/changes/changeFactory";
 import ChangeTask from "./templates/pages/changes/changeTask";
+import ChangeUser from "./templates/pages/changes/changeUser";
 
 class App extends React.Component {
     constructor(props) {
@@ -47,10 +49,12 @@ class App extends React.Component {
                     <Route history={history} path='/settingsDocument/:document_id' component={SettingsDocument} />
                     <Route history={history} path='/settingsFactory/:factory_id' component={SettingsFactory} />
                     <Route history={history} path='/settingsTask/:task_id' component={SettingsTask} />
+                    <Route history={history} path='/settingsUser/:user_id' component={SettingsUser} />
 
                     <Route history={history} path='/changeDocument/:document_id' component={ChangeDocument} />
                     <Route history={history} path='/changeFactory/:factory_id' component={ChangeFactory} />
                     <Route history={history} path='/changeTask/:task_id' component={ChangeTask} />
+                    <Route history={history} path='/changeUser/:user_id' component={ChangeUser} />
 
 
                     <Redirect from='/' to='/home'/>

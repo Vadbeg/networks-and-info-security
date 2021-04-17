@@ -27,8 +27,6 @@ export default class SettingsTask extends React.Component {
     }
 
     delete_task = () => {
-        console.log('this.state', this.state)
-
         const { task_description } = this.state;
 
         this.task.delete_task(task_description['id'])

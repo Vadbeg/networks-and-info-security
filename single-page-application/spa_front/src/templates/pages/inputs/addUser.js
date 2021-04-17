@@ -13,7 +13,7 @@ export default class AddUser extends React.Component {
         this.state = {
             'first_name': null,
             'second_name': null,
-            'is_internal': null,
+            'is_internal': false,
             'position': null,
             'email': null,
             'phone_number': null,
@@ -34,7 +34,13 @@ export default class AddUser extends React.Component {
         var name = event.target.name;
         let value = event.target.value;
 
-        this.setState({[name]: value})
+        if (name === 'is_internal'){
+            let is_internal = event.target.checked;
+
+            this.setState({[name]: is_internal});
+        } else {
+            this.setState({[name]: value});
+        }
     }
 
     addUser = (event) => {

@@ -24,16 +24,37 @@ export default class DocumentsTable extends React.Component {
         })
     }
 
+    get_users_info(all_users) {
+        let users_info = [];
+
+        if (all_users !== undefined) {
+            for (let i=0; i < all_users.length; i++){
+                let curr_user = all_users[i];
+
+                users_info.push(
+                    <span style={{ display: 'block' }}>
+                        { curr_user['first_name'] } { curr_user['second_name'] }
+                    </span>
+                );
+            }
+        }
+
+        return users_info;
+    }
+
     render() {
         const { all_documents } = this.state;
-
-        console.log(all_documents)
 
         let documentRows = [];
 
         if (all_documents !== undefined) {
             for (let i=0; i < all_documents.length; i++){
                 let curr_document = all_documents[i]
+
+                const { controllers, creators } = curr_document;
+
+                let controllers_info = this.get_users_info(controllers);
+                let creators_info = this.get_users_info(creators);
 
                 documentRows.push(
                     <tr>
@@ -46,6 +67,8 @@ export default class DocumentsTable extends React.Component {
                         <td>{ curr_document['document_type'] }</td>
                         <td>{ curr_document['date_of_creation'] }</td>
                         <td>{ curr_document['date_of_registration'] }</td>
+                        <td>{ controllers_info }</td>
+                        <td>{ creators_info }</td>
                     </tr>
                 )
             }
@@ -62,6 +85,8 @@ export default class DocumentsTable extends React.Component {
                             <th>document_type</th>
                             <th>date_of_creation</th>
                             <th>date_of_registration</th>
+                            <th>controllers</th>
+                            <th>creators</th>
                         </tr>
                         </thead>
                         <tbody>

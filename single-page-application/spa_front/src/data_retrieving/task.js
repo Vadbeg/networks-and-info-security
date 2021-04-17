@@ -40,8 +40,9 @@ class Task{
         get_one_task_url += '/' + task_id
 
         let response = Task.makeGetRequest(get_one_task_url);
+        let task_description = response['task_description']
 
-        return response;
+        return task_description;
     }
 
     add_task(
@@ -59,6 +60,33 @@ class Task{
 
         Task.makePostRequest(add_one_task_url, params)
     }
+
+    delete_task(task_id) {
+        let delete_one_task_url =  this.root_uri + this.__DELETE_TASK_REL_PATH;
+
+        delete_one_task_url += '/' + task_id
+
+        let response = Task.makeGetRequest(delete_one_task_url);
+    }
+
+    change_task(
+        task_id, task_name,
+        executor_id, document_id,
+        factory_id
+    ) {
+        let change_one_task_url =  this.root_uri + this.__CHANGE_TASK_REL_PATH;
+        change_one_task_url += '/' + task_id
+
+        let params = {
+            'task_name': task_name,
+            'executor_id': executor_id,
+            'document_id': document_id,
+            'factory_id': factory_id,
+        }
+
+        let response = Task.makePostRequest(change_one_task_url, params)
+    }
+
 
     static makeGetRequest(url, data = null) {
         var real_response = null;

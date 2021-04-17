@@ -39,9 +39,9 @@ export default class TasksTable extends React.Component {
                     <tr>
                         <td>{ curr_task['id'] }</td>
                         <td>
-                            <a>
+                            <Link to={`/settingsTask/${curr_task.id}`}>
                                 { curr_task['task_name'] }
-                            </a>
+                            </Link>
                         </td>
                         <td>{ curr_task['executor_id'] }</td>
                         <td>{ curr_task['document_id'] }</td>

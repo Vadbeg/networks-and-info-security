@@ -1,6 +1,4 @@
 import React from "react";
-import Document from "../../../data_retrieving/document";
-import User from "../../../data_retrieving/user";
 import Factory from "../../../data_retrieving/factory";
 import {Link} from "react-router-dom";
 

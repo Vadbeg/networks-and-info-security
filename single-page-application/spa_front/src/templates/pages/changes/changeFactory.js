@@ -13,7 +13,7 @@ export default class ChangeFactory extends React.Component {
             'city': null,
         }
 
-        this.factory = new Factory('http://0.0.0.0:9000/api/v_0/');
+        this.factory = new Factory(process.env.REACT_APP_ROOT_BACKEND_URI);
     }
 
     componentDidMount() {

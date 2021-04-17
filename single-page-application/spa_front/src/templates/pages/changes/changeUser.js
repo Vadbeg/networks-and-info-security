@@ -21,7 +21,7 @@ export default class ChangeUser extends React.Component {
             'phone_number': null,
         }
 
-        this.user = new User('http://0.0.0.0:9000/api/v_0/');
+        this.user = new User(process.env.REACT_APP_ROOT_BACKEND_URI);
     }
 
     componentDidMount() {

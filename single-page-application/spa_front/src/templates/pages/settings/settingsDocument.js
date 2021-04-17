@@ -13,7 +13,7 @@ export default class SettingsDocument extends React.Component {
             'all_document_tasks': []
         }
 
-        this.document = new Document('http://0.0.0.0:9000/api/v_0/');
+        this.document = new Document(process.env.REACT_APP_ROOT_BACKEND_URI);
     }
 
     componentDidMount() {

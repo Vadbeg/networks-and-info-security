@@ -16,11 +16,11 @@ export default class ChangeTask extends React.Component {
             'city': null,
         }
 
-        this.task = new Task('http://0.0.0.0:9000/api/v_0/');
+        this.task = new Task(process.env.REACT_APP_ROOT_BACKEND_URI);
 
-        this.document = new Document('http://0.0.0.0:9000/api/v_0/');
-        this.factory = new Factory('http://0.0.0.0:9000/api/v_0/');
-        this.user = new User('http://0.0.0.0:9000/api/v_0/');
+        this.document = new Document(process.env.REACT_APP_ROOT_BACKEND_URI);
+        this.factory = new Factory(process.env.REACT_APP_ROOT_BACKEND_URI);
+        this.user = new User(process.env.REACT_APP_ROOT_BACKEND_URI);
     }
 
     componentDidMount() {

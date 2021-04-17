@@ -20,8 +20,8 @@ export default class AddDocument extends React.Component {
             'choose_controllers': [],
         }
 
-        this.document = new Document('http://0.0.0.0:9000/api/v_0/');
-        this.user = new User('http://0.0.0.0:9000/api/v_0/');
+        this.document = new Document(process.env.REACT_APP_ROOT_BACKEND_URI);
+        this.user = new User(process.env.REACT_APP_ROOT_BACKEND_URI);
     }
 
     componentDidMount() {

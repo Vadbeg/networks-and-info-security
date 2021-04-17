@@ -11,7 +11,7 @@ export default class SettingsUser extends React.Component {
             'user_description': [],
         }
 
-        this.user = new User('http://0.0.0.0:9000/api/v_0/');
+        this.user = new User(process.env.REACT_APP_ROOT_BACKEND_URI);
     }
 
     componentDidMount() {

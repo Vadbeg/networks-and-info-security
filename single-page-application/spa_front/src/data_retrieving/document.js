@@ -27,7 +27,10 @@ class Document{
     get_all_documents() {
         let get_all_documents_url =  this.root_uri + this.__GET_DOCUMENTS_REL_PATH;
 
+        console.log(get_all_documents_url);
+
         let response = Document.makeGetRequest(get_all_documents_url);
+        console.log(response);
 
         let all_documents = response['all_documents']
 

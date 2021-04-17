@@ -13,7 +13,7 @@ export default class TasksTable extends React.Component {
             'all_tasks': []
         }
 
-        this.task = new Task('http://0.0.0.0:9000/api/v_0/');
+        this.task = new Task(process.env.REACT_APP_ROOT_BACKEND_URI);
     }
 
     componentDidMount() {

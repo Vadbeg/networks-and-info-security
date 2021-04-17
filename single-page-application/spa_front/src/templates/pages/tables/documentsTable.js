@@ -13,7 +13,11 @@ export default class DocumentsTable extends React.Component {
             'all_documents': []
         }
 
-        this.document = new Document('http://0.0.0.0:9000/api/v_0/');
+        console.log('process.env')
+        console.log(process.env)
+        console.log(process.env.REACT_APP_ROOT_BACKEND_URI)
+
+        this.document = new Document(process.env.REACT_APP_ROOT_BACKEND_URI);
     }
 
     componentDidMount() {

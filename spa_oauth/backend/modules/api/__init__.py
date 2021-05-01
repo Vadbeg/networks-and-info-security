@@ -25,6 +25,7 @@ def create_app(test_config=None) -> Flask:
         from spa_oauth.backend.modules.api.routes.change_routes import change_blue_print
         from spa_oauth.backend.modules.api.routes.add_routes import add_blue_print
         from spa_oauth.backend.modules.api.routes.delete_routes import delete_blue_print
+        from spa_oauth.backend.modules.api.routes.auth_routes import auth_blue_print
     except ModuleNotFoundError as err:
         print(err)
 
@@ -32,11 +33,13 @@ def create_app(test_config=None) -> Flask:
         from modules.api.routes.change_routes import change_blue_print
         from modules.api.routes.add_routes import add_blue_print
         from modules.api.routes.delete_routes import delete_blue_print
+        from modules.api.routes.auth_routes import auth_blue_print
 
     app.register_blueprint(get_blue_print)
     app.register_blueprint(change_blue_print)
     app.register_blueprint(add_blue_print)
     app.register_blueprint(delete_blue_print)
+    app.register_blueprint(auth_blue_print)
 
     app.add_url_rule('/', endpoint='index')
 

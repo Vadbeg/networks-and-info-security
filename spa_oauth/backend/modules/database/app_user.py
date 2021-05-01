@@ -36,7 +36,8 @@ class AppUser:
         :return: id of the new user
         """
 
-        password = bcrypt.hashpw(password=bytes(password), salt=bcrypt.gensalt())
+        password = bcrypt.hashpw(password=password.encode(), salt=bcrypt.gensalt())
+        password = 'password'
 
         add_app_user_query = """
         INSERT INTO app_user (email, password)
@@ -74,9 +75,10 @@ class AppUser:
                 key=os.environ['SECRET_KEY'],
                 algorithm='HS256'
             )
+            print(token)
 
         except Exception as ex:
-            return ex
+            raise
 
         return token
 

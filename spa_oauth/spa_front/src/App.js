@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import ReactDOM from 'react-dom';
 import {Redirect, Route, Switch, withRouter} from "react-router-dom";
 
@@ -23,15 +23,56 @@ import ChangeFactory from "./templates/pages/changes/changeFactory";
 import ChangeTask from "./templates/pages/changes/changeTask";
 import ChangeUser from "./templates/pages/changes/changeUser";
 
+import AuthPage from "./templates/pages/auth/authPage";
+import Login from "./templates/pages/auth/login";
+import Registration from "./templates/pages/auth/registration";
+
+
 class App extends React.Component {
     constructor(props) {
         super(props);
     }
 
+    setToken = (userToken) => {
+        sessionStorage.setItem('token', JSON.stringify(userToken));
+
+        this.forceUpdate();
+    }
+
+    getToken = () => {
+        const tokenString = sessionStorage.getItem('token')
+        const userToken = JSON.parse(tokenString)
+
+        return userToken
+    }
+
     render() {
         const { history } = this.props;
 
-        let myfirstelement = (
+        let token = this.getToken();
+
+        if (!token){
+            let login_element = (
+                <div>
+                    <Switch>
+                        <Route history={history}
+                               path='/registration'
+                               render={(props) => <Registration setToken={this.setToken} {...props} />} />
+                        <Route history={history}
+                               path="/login"
+                               render={(props) => <Login setToken={this.setToken} {...props} />} />
+
+                        <Redirect from='/' to='/login'/>
+                    </Switch>
+
+                </div>
+
+                )
+
+            return login_element;
+        }
+
+        let main_app_element = (
             <div>
                 <Switch>
                     <Route history={history} path='/home' component={Home} />
@@ -56,13 +97,15 @@ class App extends React.Component {
                     <Route history={history} path='/changeTask/:task_id' component={ChangeTask} />
                     <Route history={history} path='/changeUser/:user_id' component={ChangeUser} />
 
+                    {/*<Route history={history} path='/registration' component={Registration} />*/}
+                    {/*<Route history={history} path='/auth' component={AuthPage} />*/}
 
                     <Redirect from='/' to='/home'/>
                 </Switch>
             </div>
         );
 
-        return myfirstelement
+        return main_app_element
     }
 }
 

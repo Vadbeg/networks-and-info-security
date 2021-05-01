@@ -4,7 +4,7 @@ import os
 
 try:
     # Used for server setup using command line
-    from frontend_backend_servers.backend.modules.database.database_interactions import connect_to_database
+    from spa_oauth.backend.modules.database.database_interactions import connect_to_database
 except ModuleNotFoundError as err:
     # Used for server setup using Docker
     from modules.database.database_interactions import connect_to_database

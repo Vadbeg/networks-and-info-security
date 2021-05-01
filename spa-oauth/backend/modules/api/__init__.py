@@ -21,11 +21,13 @@ def create_app(test_config=None) -> Flask:
         app.config.update(test_config)
 
     try:
-        from frontend_backend_servers.backend.modules.api.routes.get_routes import get_blue_print
-        from frontend_backend_servers.backend.modules.api.routes.change_routes import change_blue_print
-        from frontend_backend_servers.backend.modules.api.routes.add_routes import add_blue_print
-        from frontend_backend_servers.backend.modules.api.routes.delete_routes import delete_blue_print
+        from spa_oauth.backend.modules.api.routes.get_routes import get_blue_print
+        from spa_oauth.backend.modules.api.routes.change_routes import change_blue_print
+        from spa_oauth.backend.modules.api.routes.add_routes import add_blue_print
+        from spa_oauth.backend.modules.api.routes.delete_routes import delete_blue_print
     except ModuleNotFoundError as err:
+        print(err)
+
         from modules.api.routes.get_routes import get_blue_print
         from modules.api.routes.change_routes import change_blue_print
         from modules.api.routes.add_routes import add_blue_print

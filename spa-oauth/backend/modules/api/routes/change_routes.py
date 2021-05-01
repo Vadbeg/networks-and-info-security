@@ -9,16 +9,16 @@ from flask import (Blueprint, Response,
 
 try:
     # Used for server setup using command line
-    from frontend_backend_servers.backend.modules.api.database_connection import connection, cursor
-    from frontend_backend_servers.backend.modules.api.status_codes import StatusCodes
-    from frontend_backend_servers.backend.modules.database.database_interactions import (close_connection,
-                                                                                         connect_to_database)
-    from frontend_backend_servers.backend.modules.database.document import Document
-    from frontend_backend_servers.backend.modules.database.user import User
-    from frontend_backend_servers.backend.modules.database.task import Task
-    from frontend_backend_servers.backend.modules.database.factory import Factory
+    from spa_oauth.backend.modules.api.database_connection import connection, cursor
+    from spa_oauth.backend.modules.api.status_codes import StatusCodes
+    from spa_oauth.backend.modules.database.database_interactions import (close_connection,
+                                                                          connect_to_database)
+    from spa_oauth.backend.modules.database.document import Document
+    from spa_oauth.backend.modules.database.user import User
+    from spa_oauth.backend.modules.database.task import Task
+    from spa_oauth.backend.modules.database.factory import Factory
 
-    from frontend_backend_servers.backend.modules.api.schemas import (AddNewUser, AddNewDocument,
+    from spa_oauth.backend.modules.api.schemas import (AddNewUser, AddNewDocument,
                                                                       AddNewTask, UpdateTableSchema,
                                                                       AddNewFactory)
 except ModuleNotFoundError as err:

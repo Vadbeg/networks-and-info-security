@@ -5,6 +5,7 @@ import os
 from typing import Union, List, Dict
 
 import jwt
+import bcrypt
 
 
 class AppUser:
@@ -23,8 +24,37 @@ class AppUser:
         self.connection = connection
         self.cursor = cursor
 
+    def add_app_user(
+            self, email: str,
+            password: str
+    ) -> int:
+        """
+        Adds new user to database
+
+        :param email: user email
+        :param password: user password
+        :return: id of the new user
+        """
+
+        password = bcrypt.hashpw(password=bytes(password), salt=bcrypt.gensalt())
+
+        add_app_user_query = """
+        INSERT INTO app_user (email, password)
+        VALUES (%s, %s)
+        RETURNING id;
+                """
+
+        val = [email, password]
+
+        self.cursor.execute(add_app_user_query, val)
+        self.connection.commit()
+
+        new_user_id = self.cursor.fetchone()[0]
+
+        return new_user_id
+
     @staticmethod
-    def encode_auth_token(user_id) -> Union[str, Exception]:
+    def encode_auth_token(user_id) -> Union[bytes, Exception]:
         """
         Generates  the auth token
 

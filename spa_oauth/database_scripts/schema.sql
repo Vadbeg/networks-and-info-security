@@ -24,6 +24,11 @@ CREATE TABLE "user" (
     phone_number VARCHAR(25)
 );
 
+CREATE TABLE app_user (
+    id SERIAL PRIMARY KEY,
+    email VARCHAR(50),
+    password VARCHAR(255),
+);
 
 CREATE TABLE factory (
     id SERIAL PRIMARY KEY,

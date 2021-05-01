@@ -68,3 +68,10 @@ class AddNewFactory(Schema):
     factory_name = fields.Str(required=True)
     size = fields.Int(required=True)
     city = fields.Str(required=True)
+
+
+class AddNewAppUser(Schema):
+    """Schema for creating new app user"""
+
+    email = fields.Email(required=True)
+    password = fields.Str(required=True)

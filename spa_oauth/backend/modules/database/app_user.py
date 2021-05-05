@@ -1,11 +1,12 @@
 """Module with app users table interection"""
 
-import datetime
 import os
+import hashlib
+import datetime
+import binascii
 from typing import Union, List, Dict
 
 import jwt
-import bcrypt
 
 
 class AppUser:
@@ -37,17 +38,13 @@ class AppUser:
         """
 
         # password = bcrypt.hashpw(password=password.encode(), salt=bcrypt.gensalt())
-        password = hash(password.encode())
-
-        print(f'Generated: {password}')
+        password = self.hash_password(password)
 
         add_app_user_query = """
         INSERT INTO app_user (email, password)
         VALUES (%s, %s)
         RETURNING id;
                 """
-
-        print(password)
 
         val = [email, password]
 
@@ -59,16 +56,36 @@ class AppUser:
         return new_user_id
 
     @staticmethod
+    def hash_password(password: str):
+        salt = hashlib.sha256(os.urandom(60)).hexdigest().encode('ascii')
+
+        password_hash = hashlib.pbkdf2_hmac(
+            'sha512',
+            password.encode('utf-8'),
+            salt, 100_000
+        )
+        password_hash = binascii.hexlify(password_hash)
+
+        result_hash = (salt + password_hash).decode('ascii')
+
+        return result_hash
+
+    @staticmethod
     def check_correct_password(input_password: str, old_password_hash: str) -> bool:
-        input_password_hash = hash(input_password.encode())
+        salt = old_password_hash[:64]
+        old_password_hash = old_password_hash[64:]
 
-        is_correct_password = input_password_hash == old_password_hash
+        input_password_hash = hashlib.pbkdf2_hmac(
+            'sha512',
+            input_password.encode('utf-8'),
+            salt.encode('ascii'),
+            100_000
+        )
+        input_password_hash = binascii.hexlify(input_password_hash).decode('ascii')
 
-        print(f'Input', input_password_hash)
-        print(f'Output', old_password_hash)
-        print(f'is_correct_password', is_correct_password)
+        is_password_correct = (input_password_hash == old_password_hash)
 
-        return is_correct_password
+        return is_password_correct
 
     def get_app_user_by_email(
             self, email: str,

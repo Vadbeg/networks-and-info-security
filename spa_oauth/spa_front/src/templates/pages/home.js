@@ -22,8 +22,15 @@ class Home extends React.Component {
         super(props);
 
         this.state = {
-            'sections': SECTIONS
+            'sections': SECTIONS,
+            'is_logged': true
         }
+    }
+
+    logoutUser = () => {
+        sessionStorage.removeItem('token');
+
+        this.props.history.push('/login')
     }
 
     render() {
@@ -44,6 +51,12 @@ class Home extends React.Component {
         let links_element = (
             <div>
                 {all_links}
+
+                <button className='button-link'
+                        onClick={ this.logoutUser.bind(this) }
+                        style={{float: 'right'}}>
+                    Logout
+                </button>
             </div>
         );
 

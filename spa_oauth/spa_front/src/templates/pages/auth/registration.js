@@ -76,7 +76,7 @@ export default class Registration extends React.Component {
                 </Link>
 
                 <div className="login-box">
-                    <h2>Login</h2>
+                    <h2>Register</h2>
 
                     <form onSubmit={this.registerUser.bind(this)} >
 

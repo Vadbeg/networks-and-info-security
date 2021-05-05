@@ -55,9 +55,14 @@ export default class Registration extends React.Component {
                 password
             )
 
-            let { auth_token } = response;
+            if (response === 403){
+                alert('User with given email exists')
+            } else if (response !== null) {
+                let {auth_token} = response;
 
-            setToken(auth_token);
+                setToken(auth_token);
+            }
+
         }
 
     }

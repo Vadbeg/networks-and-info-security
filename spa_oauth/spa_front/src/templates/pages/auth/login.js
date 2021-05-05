@@ -8,9 +8,6 @@ export default class Login extends React.Component {
     constructor(props) {
         super(props);
 
-        console.log(props)
-        console.log('Creating document table')
-
         this.state = {
             'email': null,
             'password': null,
@@ -30,7 +27,7 @@ export default class Login extends React.Component {
         this.setState({[name]: value})
     }
 
-    registerUser = (event) => {
+    loginUser = (event) => {
         event.preventDefault();
 
         const {
@@ -39,16 +36,21 @@ export default class Login extends React.Component {
         } = this.state;
         const { setToken } = this.props
 
-        let response = this.appUser.register_user(
+        let response = this.appUser.login_user(
             email,
             password
         )
 
-        let { auth_token } = response;
-        console.log(auth_token)
-        console.log(setToken)
+        if (response === 403) {
+            alert('Incorrect password')
+        } else if (response === 404) {
+            alert('No user with give email')
+        } else if (response !== null) {
+            let { auth_token } = response;
 
-        setToken(auth_token);
+            setToken(auth_token);
+        }
+
     }
 
     render() {
@@ -59,7 +61,7 @@ export default class Login extends React.Component {
                 <div className="login-box">
                     <h2>Login</h2>
 
-                    <form onSubmit={this.registerUser.bind(this)} >
+                    <form onSubmit={this.loginUser.bind(this)} >
 
                         <div className="user-box">
                             <input type="text"

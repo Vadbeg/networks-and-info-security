@@ -36,14 +36,18 @@ class AppUser:
         :return: id of the new user
         """
 
-        password = bcrypt.hashpw(password=password.encode(), salt=bcrypt.gensalt())
-        password = 'password'
+        # password = bcrypt.hashpw(password=password.encode(), salt=bcrypt.gensalt())
+        password = hash(password.encode())
+
+        print(f'Generated: {password}')
 
         add_app_user_query = """
         INSERT INTO app_user (email, password)
         VALUES (%s, %s)
         RETURNING id;
                 """
+
+        print(password)
 
         val = [email, password]
 
@@ -53,6 +57,51 @@ class AppUser:
         new_user_id = self.cursor.fetchone()[0]
 
         return new_user_id
+
+    @staticmethod
+    def check_correct_password(input_password: str, old_password_hash: str) -> bool:
+        input_password_hash = hash(input_password.encode())
+
+        is_correct_password = input_password_hash == old_password_hash
+
+        print(f'Input', input_password_hash)
+        print(f'Output', old_password_hash)
+        print(f'is_correct_password', is_correct_password)
+
+        return is_correct_password
+
+    def get_app_user_by_email(
+            self, email: str,
+    ) -> Dict[str, str]:
+        """
+        Adds new user to database
+
+        :param email: user email
+        :return: id of the new user
+        """
+
+        add_app_user_query = """
+        SELECT *
+        FROM app_user
+        WHERE email=%s;
+                """
+
+        val = [email]
+
+        self.cursor.execute(add_app_user_query, val)
+        self.connection.commit()
+
+        all_users_with_given_email = self.cursor.fetchall()
+
+        if (all_users_with_given_email is None) or (len(all_users_with_given_email) == 0):
+            user_with_given_id = None
+        else:
+            user_with_given_id = all_users_with_given_email[0]
+            user_with_given_id = dict(zip(self.COLUMNS, user_with_given_id))
+
+        print(user_with_given_id)
+
+        return user_with_given_id
 
     @staticmethod
     def encode_auth_token(user_id) -> Union[bytes, Exception]:

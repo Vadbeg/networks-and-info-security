@@ -27,7 +27,7 @@ CREATE TABLE "user" (
 CREATE TABLE app_user (
     id SERIAL PRIMARY KEY,
     email VARCHAR(50),
-    password TEXT NOT NULL
+    password VARCHAR(256) NOT NULL
 );
 
 CREATE TABLE factory (

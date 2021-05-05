@@ -8,6 +8,7 @@ import App from "../App";
 
 class AppUser{
     __REGISTER_USER = 'auth/register'
+    __LOGIN_USER = 'auth/login'
 
     constructor(root_uri) {
         /**
@@ -29,7 +30,30 @@ class AppUser{
 
         let response = AppUser.makePostRequest(register_user_url, params);
 
-        console.log(response)
+        if (response['status'] === 403) {
+            response = 403;
+        }
+
+        return response;
+    }
+
+    login_user(
+        email, password
+    ) {
+        let params = {
+            'email': email,
+            'password': password,
+        }
+
+        let register_user_url =  this.root_uri + this.__LOGIN_USER;
+
+        let response = AppUser.makePostRequest(register_user_url, params);
+
+        if (response['status'] === 403) {
+            response = 403;
+        } else if (response['status'] === 404) {
+            response = 404
+        }
 
         return response;
     }
@@ -79,6 +103,7 @@ class AppUser{
             },
             error: function (error) {
                 console.log('Error', error);
+                real_response = error;
             }
         };
 

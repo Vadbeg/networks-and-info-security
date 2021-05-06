@@ -23,7 +23,6 @@ import ChangeFactory from "./templates/pages/changes/changeFactory";
 import ChangeTask from "./templates/pages/changes/changeTask";
 import ChangeUser from "./templates/pages/changes/changeUser";
 
-import AuthPage from "./templates/pages/auth/authPage";
 import Login from "./templates/pages/auth/login";
 import Registration from "./templates/pages/auth/registration";
 

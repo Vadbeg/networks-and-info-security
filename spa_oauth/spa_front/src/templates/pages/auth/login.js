@@ -3,6 +3,9 @@ import {Link} from "react-router-dom";
 
 import AppUser from "../../../data_retrieving/appUser";
 
+import GoogleLogin from "react-google-login";
+// import GitHubLogin from "react-github-login/src";
+
 
 export default class Login extends React.Component {
     constructor(props) {
@@ -21,7 +24,7 @@ export default class Login extends React.Component {
     }
 
     inputChangeHandler = (event) => {
-        var name = event.target.name;
+        let name = event.target.name;
         let value = event.target.value;
 
         this.setState({[name]: value})
@@ -51,6 +54,38 @@ export default class Login extends React.Component {
             setToken(auth_token);
         }
 
+    }
+
+    responseGoogle = (event) => {
+        console.log(event);
+
+        const {
+            tokenObj,
+            profileObj,
+        } = event;
+        const { email } = profileObj;
+        const { login_hint } = tokenObj;
+
+        const { setToken } = this.props
+
+        let response = this.appUser.login_user_google(
+            email,
+            login_hint
+        )
+
+        if (response === 403) {
+            alert('Incorrect password')
+        } else if (response === 404) {
+            alert('No user with give email')
+        } else if (response !== null) {
+            let { auth_token } = response;
+
+            setToken(auth_token);
+        }
+    }
+
+    responseGithub = (response) => {
+        console.log(response);
     }
 
     render() {
@@ -86,10 +121,26 @@ export default class Login extends React.Component {
                             // onClick={this.addDocument}
                         />
 
-                        Have no account yet?
-                        <Link className='registration-link' to={'/registration'}>
-                            Sign up
-                        </Link>
+                        <div>
+                            Have no account yet?
+                            <Link className='registration-link' to={'/registration'}>
+                                Sign up
+                            </Link>
+                        </div>
+                        <div>
+                            or
+                        </div>
+
+                        <div>
+                            <GoogleLogin
+                                clientId='476155838688-163di12pq91fs3tdjht124bp7qn4v3vs.apps.googleusercontent.com'
+                                buttonText="Login"
+                                onSuccess={ this.responseGoogle.bind(this) }
+                                onFailure={ this.responseGoogle.bind(this) }
+                                cookiePolicy={'single_host_origin'}
+                            />
+
+                        </div>
 
                     </form>
                 </div>

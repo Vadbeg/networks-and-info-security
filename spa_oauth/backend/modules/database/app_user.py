@@ -11,7 +11,7 @@ import jwt
 
 class AppUser:
     COLUMNS = [
-        'id', 'email', 'password',
+        'id', 'email', 'password', 'access_token'
     ]
 
     def __init__(self, connection, cursor):
@@ -47,6 +47,35 @@ class AppUser:
                 """
 
         val = [email, password]
+
+        self.cursor.execute(add_app_user_query, val)
+        self.connection.commit()
+
+        new_user_id = self.cursor.fetchone()[0]
+
+        return new_user_id
+
+    def add_app_user_token(
+            self, email: str,
+            access_token: str
+    ) -> int:
+        """
+        Adds new user to database
+
+        :param email: user email
+        :param access_token: users access token
+        :return: id of the new user
+        """
+
+        # password = bcrypt.hashpw(password=password.encode(), salt=bcrypt.gensalt())
+
+        add_app_user_query = """
+        INSERT INTO app_user (email, access_token)
+        VALUES (%s, %s)
+        RETURNING id;
+                """
+
+        val = [email, access_token]
 
         self.cursor.execute(add_app_user_query, val)
         self.connection.commit()

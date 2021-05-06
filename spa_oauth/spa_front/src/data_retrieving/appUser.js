@@ -9,6 +9,7 @@ import App from "../App";
 class AppUser{
     __REGISTER_USER = 'auth/register'
     __LOGIN_USER = 'auth/login'
+    __LOGIN_USER_GOOGLE = 'auth/loginGoogle'
 
     constructor(root_uri) {
         /**
@@ -45,9 +46,36 @@ class AppUser{
             'password': password,
         }
 
+        console.log('Making request')
+
         let register_user_url =  this.root_uri + this.__LOGIN_USER;
 
         let response = AppUser.makePostRequest(register_user_url, params);
+        console.log('Finished request')
+
+        if (response['status'] === 403) {
+            response = 403;
+        } else if (response['status'] === 404) {
+            response = 404
+        }
+
+        return response;
+    }
+
+
+    login_user_google(
+        email, accessToken
+    ) {
+        let login_google_user_url =  this.root_uri + this.__LOGIN_USER_GOOGLE;
+
+        let params = {
+            'email': email,
+            'access_token': accessToken,
+        }
+
+        let response = AppUser.makePostRequest(login_google_user_url, params);
+
+        console.log('response', response)
 
         if (response['status'] === 403) {
             response = 403;

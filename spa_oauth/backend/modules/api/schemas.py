@@ -75,3 +75,10 @@ class AddNewAppUser(Schema):
 
     email = fields.Email(required=True)
     password = fields.Str(required=True)
+
+
+class AddNewAppUserToken(Schema):
+    """Schema for creating new app user"""
+
+    email = fields.Email(required=True)
+    access_token = fields.Str(required=True)

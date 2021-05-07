@@ -63,6 +63,9 @@ export default class Login extends React.Component {
             tokenObj,
             profileObj,
         } = event;
+
+        console.log(event);
+
         const { email } = profileObj;
         const { login_hint } = tokenObj;
 
